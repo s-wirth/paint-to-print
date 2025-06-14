@@ -1,7 +1,19 @@
+'use client'
+import React, { useState, useEffect } from 'react'
 export default function Home() {
+
+  const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    fetch('/api/hello')
+      .then(response => response.json())
+      .then(data => setMessage(data.message))
+  }, [])
+
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      Hello World
+    <main>
+      <h1>{message}</h1>
     </main>
   )
 }
