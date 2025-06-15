@@ -35,8 +35,15 @@ def hello():
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app.route("/api/get-all-uploads", methods=["GET"])
+def getAllUploads():
+    uploadFolder = os.path.join(os.getcwd(), app.config["UPLOAD_FOLDER"])
+    files = os.listdir(uploadFolder)
+    pprint(files)
+    return json.dumps({"files": files})
+
 @app.route("/api/upload-image", methods=["POST"])
-def image():
+def uploadImage():
     if request.method == "POST":
         # check if the post request has the file part
         if "file" not in request.files:
@@ -51,7 +58,12 @@ def image():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             uploadFolder = os.path.join(os.getcwd(), app.config["UPLOAD_FOLDER"])
-            file.save(os.path.join(uploadFolder, filename))
-            return json.dumps({"message": "File uploaded successfully to " + uploadFolder, "filename": filename}), 200
+            if not os.path.exists(uploadFolder):
+                os.makedirs(uploadFolder)
+            newFile = os.path.join(uploadFolder, filename)
+            if os.path.exists(newFile):
+                return json.dumps({"message": "File already exists", "filename": filename, "status": 400})
+            file.save(newFile)
+            return json.dumps({"message": "File uploaded successfully to " + uploadFolder, "filename": filename, "status": 200}), 200
         else:
-            return json.dumps({"message": "File type is not allowed"}), 400
+            return json.dumps({"message": "File type is not allowed", "filename": filename, "status": 400}), 400

@@ -2,11 +2,25 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 export default function Home() {
+  const [uploadedImages, setUploadedImages] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [responseData, setResponseData] = useState({
     message: "",
     fileName: "",
+    status: "",
   });
+
+  const fetchUploads = async () => {
+    console.log('fir')
+    const res = await fetch("/api/get-all-uploads");
+    const data = await res.json();
+    console.log('data', data)
+    setUploadedImages(data["files"]);
+  }
+
+  useEffect(() => {
+    fetchUploads();
+  }, []);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -15,10 +29,10 @@ export default function Home() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append('file', selectedFile);
+    formData.append("file", selectedFile);
 
-    const response = await fetch('/api/upload-image', {
-      method: 'POST',
+    const response = await fetch("/api/upload-image", {
+      method: "POST",
       body: formData,
     });
 
@@ -27,19 +41,33 @@ export default function Home() {
       setResponseData({
         message: data.message,
         fileName: data.filename,
+        status: data.status,
       });
-      console.log('File uploaded successfully');
+      fetchUploads();
     } else {
-      console.error('Error uploading file');
+      setResponseData({
+        message: data.message,
+        status: data.status,
+      });
     }
   };
 
-
   return (
     <main>
+      <h1>Paint to Print</h1>
+      <h2>Uploaded Images</h2>
+      {uploadedImages.length > 0 && uploadedImages.map((image) => (
+        <Image
+          key={image}
+          src={`/uploads/${image}`}
+          alt="Uploaded Image"
+          width={200}
+          height={200}
+        />
+      ))}
       {responseData.message && <p>{responseData.message}</p>}
       {responseData.fileName && <p>{responseData.fileName}</p>}
-      {responseData.fileName && <Image src={`/uploads/${responseData.fileName}`} alt="Uploaded Image" width={200} height={200} />}
+      <h2>Upload an Image</h2>
       <form onSubmit={handleSubmit}>
         <input type="file" onChange={handleFileChange} />
         <button type="submit">Upload</button>
