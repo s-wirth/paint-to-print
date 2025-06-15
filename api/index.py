@@ -35,11 +35,8 @@ def hello():
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route("/api/image", methods=["POST"])
+@app.route("/api/upload-image", methods=["POST"])
 def image():
-    pprint('______________________THIS THE METHOD___________________________')
-    pprint(request.method)
-    pprint('________________________THIS THE ENVIRON_________________________')
     if request.method == "POST":
         # check if the post request has the file part
         if "file" not in request.files:
@@ -54,10 +51,7 @@ def image():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             uploadFolder = os.path.join(os.getcwd(), app.config["UPLOAD_FOLDER"])
-            pprint('______________________path___________________________')
-            pprint(os.path.join(os.getcwd(), app.config["UPLOAD_FOLDER"]))
-            pprint('______________________path end___________________________')
             file.save(os.path.join(uploadFolder, filename))
-            return json.dumps({"message": "File uploaded successfully to " + uploadFolder})
+            return json.dumps({"message": "File uploaded successfully to " + uploadFolder, "filename": filename}), 200
         else:
             return json.dumps({"message": "File type is not allowed"}), 400
