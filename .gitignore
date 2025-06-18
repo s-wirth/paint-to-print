@@ -39,5 +39,5 @@ next-env.d.ts
 __pycache__
 
 # local images
-/public/uploads/**
-/public/opencv_store/**
+/public/uploads/*
+/public/opencv_store/*
