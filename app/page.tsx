@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 export default function Home() {
   const [uploadedImages, setUploadedImages] = useState([]);
+  const [contouredImages, setContouredImages] = useState([]);
   const [fileToUpload, setFileToUpload] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [responseData, setResponseData] = useState({
@@ -18,9 +19,17 @@ export default function Home() {
     console.log('data', data)
     setUploadedImages(data["files"]);
   }
+  const fetchContours = async () => {
+    console.log('fir')
+    const res = await fetch("/api/get-all-contours");
+    const data = await res.json();
+    console.log('data', data)
+    setContouredImages(data["files"]);
+  }
 
   useEffect(() => {
     fetchUploads();
+    fetchContours();
   }, []);
 
   const handleFileChange = (event) => {
@@ -62,6 +71,7 @@ export default function Home() {
       })
     });
     const data = await response.json();
+    fetchContours();
     console.log('data', data)
   }
 
@@ -83,6 +93,18 @@ export default function Home() {
         />
       ))}
       {selectedFile && <button onClick={getContour}>Get Contour</button>}
+      <h2>Contoured Images</h2>
+      {contouredImages.length > 0 && contouredImages.map((image) => (
+        <Image
+          key={image}
+          src={`/opencv_store/${image}`}
+          alt="Uploaded Image"
+          width={200}
+          height={200}
+          className={selectedFile === image ? "uploadedImage selected" : "uploadedImage"}
+          onClick={() => setSelectedFile(image)}
+        />
+      ))}
       {responseData.message && <p>{responseData.message}</p>}
       {responseData.fileName && <p>{responseData.fileName}</p>}
       <h2>Upload an Image</h2>

@@ -44,6 +44,14 @@ def getAllUploads():
     return json.dumps({"files": files})
 
 
+@app.route("/api/get-all-contours", methods=["GET"])
+def getAllContours():
+    contourFolder = os.path.join(os.getcwd(), app.config["OPENCV_STORE_FOLDER"])
+    allFiles = os.listdir(contourFolder)
+    files = [f for f in allFiles if os.path.isfile(os.path.join(contourFolder, f)) and allowed_file(f)]
+    return json.dumps({"files": files})
+
+
 @app.route("/api/upload-image", methods=["POST"])
 def uploadImage():
     if request.method == "POST":

@@ -3,8 +3,6 @@ import os
 from helpers import pprint
 
 def processContour(pathToImage, imageName, folder):
-    pprint('pathToImage', pathToImage)
-    pprint('folder', folder)
     newName = 'contour_' + imageName.split(".")[0] + '.jpg'
     contouredImage = os.path.join(folder, newName)
     # Load the pathToImage
@@ -33,8 +31,7 @@ def processContour(pathToImage, imageName, folder):
         if area > 20000:
             x, y, w, h = cv2.boundingRect(cnt)
             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-    
-    pprint('contouredImage', contouredImage)
+
     cv2.imwrite(contouredImage, img)
 
     return contouredImage
