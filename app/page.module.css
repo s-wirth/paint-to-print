@@ -30,7 +30,14 @@
 }
 
 .workPiece {
-  background: yellow;
-  height: 500px;
-  width: 500px;
+  display: flex;
+  justify-content: center;
+  background: #141319;
+  height: 50%;
+  width: 100%;
+}
+
+.workPieceImage {
+  height: 100%;
+  width: auto;
 }

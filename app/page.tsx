@@ -128,6 +128,7 @@ export default function Home() {
               alt="Contoured Image"
               width={400}
               height={400}
+              className={styles.workPieceImage}
             />
           )}
         </div>
