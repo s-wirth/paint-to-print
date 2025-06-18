@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 export default function Home() {
   const [uploadedImages, setUploadedImages] = useState([]);
+  const [fileToUpload, setFileToUpload] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [responseData, setResponseData] = useState({
     message: "",
@@ -23,13 +24,13 @@ export default function Home() {
   }, []);
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    setFileToUpload(event.target.files[0]);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append("file", selectedFile);
+    formData.append("file", fileToUpload);
 
     const response = await fetch("/api/upload-image", {
       method: "POST",
@@ -52,6 +53,20 @@ export default function Home() {
     }
   };
 
+  const getContour = async () => {
+    const response = await fetch("/api/get-contour", {
+      method: "POST",
+      contentType: "application/json",
+      body: JSON.stringify({
+        fileName: selectedFile
+      })
+    });
+    const data = await response.json();
+    console.log('data', data)
+  }
+
+  console.log('typeof selectedFile', typeof selectedFile)
+  console.log('selectedFile', selectedFile)
   return (
     <main>
       <h1>Paint to Print</h1>
@@ -63,8 +78,11 @@ export default function Home() {
           alt="Uploaded Image"
           width={200}
           height={200}
+          className={selectedFile === image ? "uploadedImage selected" : "uploadedImage"}
+          onClick={() => setSelectedFile(image)}
         />
       ))}
+      {selectedFile && <button onClick={getContour}>Get Contour</button>}
       {responseData.message && <p>{responseData.message}</p>}
       {responseData.fileName && <p>{responseData.fileName}</p>}
       <h2>Upload an Image</h2>
