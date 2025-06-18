@@ -87,14 +87,21 @@ export default function Home() {
     <main className={styles.main}>
       <div className={styles.fileSelection}>
         <h1>Paint to Print</h1>
+        {responseData.message && <p>{responseData.message}</p>}
+        {responseData.fileName && <p>{responseData.fileName}</p>}
+        <h2>Upload an Image</h2>
+        <form onSubmit={handleSubmit}>
+          <input type="file" onChange={handleFileChange} />
+          <button type="submit">Upload</button>
+        </form>
         <h2>Uploaded Images</h2>
         {uploadedImages.length > 0 && uploadedImages.map((image) => (
           <Image
             key={image}
             src={`/uploads/${image}`}
             alt="Uploaded Image"
-            width={200}
-            height={200}
+            width={120}
+            height={120}
             className={selectedFile === image ? styles.selectedImage + " " + styles.uploadedImage : styles.uploadedImage}
             onClick={() => setSelectedFile(image)}
           />
@@ -106,19 +113,12 @@ export default function Home() {
             key={image}
             src={`/opencv_store/${image}`}
             alt="Uploaded Image"
-            width={200}
-            height={200}
+            width={120}
+            height={120}
             className={selectedContouredFile === image ? styles.selectedContouredImage + " " + styles.contouredImage : styles.contouredImage}
             onClick={() => setSelectedContouredFile(image)}
           />
         ))}
-        {responseData.message && <p>{responseData.message}</p>}
-        {responseData.fileName && <p>{responseData.fileName}</p>}
-        <h2>Upload an Image</h2>
-        <form onSubmit={handleSubmit}>
-          <input type="file" onChange={handleFileChange} />
-          <button type="submit">Upload</button>
-        </form>
       </div>
       <div className={styles.workBench}>
         <div className={styles.workPiece}>
