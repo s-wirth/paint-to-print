@@ -16,26 +16,15 @@ export default function Home() {
   });
 
   const fetchUploads = async () => {
-    console.log('fir')
+    console.log('hello')
     const res = await fetch("/api/get-all-uploads");
     const data = await res.json();
     console.log('data', data)
     setUploadedImages(data["files"]);
   }
-  const fetchContours = async () => {
-    console.log('fir')
-    const res = await fetch("/api/get-all-contours");
-    const data = await res.json();
-    console.log('data', data)
-    setContouredImages(data["files"]);
-    if (data["files"].length > 0) {
-      setSelectedContouredFile(data["files"][0])
-    }
-  }
 
   useEffect(() => {
     fetchUploads();
-    fetchContours();
   }, []);
 
   const handleFileChange = (event) => {
@@ -68,21 +57,6 @@ export default function Home() {
     }
   };
 
-  const getContour = async () => {
-    const response = await fetch("/api/get-contour", {
-      method: "POST",
-      contentType: "application/json",
-      body: JSON.stringify({
-        fileName: selectedFile
-      })
-    });
-    const data = await response.json();
-    fetchContours();
-    console.log('data', data)
-  }
-
-  console.log('typeof selectedFile', typeof selectedFile)
-  console.log('selectedFile', selectedFile)
   return (
     <main className={styles.main}>
       <div className={styles.fileSelection}>
@@ -108,17 +82,6 @@ export default function Home() {
         ))}
         {selectedFile && <button onClick={getContour}>Get Contour</button>}
         <h2>Contoured Images</h2>
-        {contouredImages.length > 0 && contouredImages.map((image) => (
-          <Image
-            key={image}
-            src={`/opencv_store/${image}`}
-            alt="Uploaded Image"
-            width={120}
-            height={120}
-            className={selectedContouredFile === image ? styles.selectedContouredImage + " " + styles.contouredImage : styles.contouredImage}
-            onClick={() => setSelectedContouredFile(image)}
-          />
-        ))}
       </div>
       <div className={styles.workBench}>
         <div className={styles.workPiece}>
