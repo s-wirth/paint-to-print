@@ -80,14 +80,14 @@ export default function Home() {
             onClick={() => setSelectedFile(image)}
           />
         ))}
-        {selectedFile && <button onClick={getContour}>Get Contour</button>}
+        {selectedFile && <button onClick={() => setSelectedContouredFile(selectedFile)}>Get Contour</button>}
         <h2>Contoured Images</h2>
       </div>
       <div className={styles.workBench}>
         <div className={styles.workPiece}>
           {selectedContouredFile && (
             <Image
-              src={`/opencv_store/${selectedContouredFile}`}
+              src={`/uploads/${selectedContouredFile}`}
               alt="Contoured Image"
               width={400}
               height={400}
