@@ -104,6 +104,22 @@ def uploadImage():
             }
         )
     file.save(newFile)
+    image_meta_data = {}
+    with open(PATH_TO_IMAGE_META, "r") as json_file:
+        image_meta_data = json.load(json_file)
+    with open(PATH_TO_IMAGE_META, "w") as json_file:
+        helpers.pprint(image_meta_data)
+        image_meta_data["images"].append(
+            {
+                "name": helpers.get_file_name(filename),
+                "upload_url": helpers.get_file_upload_url(filename),
+                "opencv_url": "",
+                "id": len(image_meta_data["images"]) + 1,
+                "width": 600,
+                "height": 400,
+            }
+        )
+        json_file.write(json.dumps(image_meta_data, indent=4))
     return (
         json.dumps(
             {

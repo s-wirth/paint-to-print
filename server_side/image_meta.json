@@ -1,31 +1,39 @@
 {
-  "images": [
-    {
-      "name": "RainbowSunset",
-      "upload_url": "/uploads/RainbowSunset.jpeg",
-      "opencv_url": "",
-      "id": 1,
-      "width": 600,
-      "height": 400,
-      "type": "jpeg"
-    },
-    {
-      "name": "Stormy",
-      "upload_url": "/uploads/Stormy.jpeg",
-      "opencv_url": "",
-      "id": 2,
-      "width": 600,
-      "height": 400,
-      "type": "jpeg"
-    },
-    {
-      "name": "Dragon",
-      "upload_url": "/uploads/WaterDragon.jpeg",
-      "opencv_url": "",
-      "id": 3,
-      "width": 600,
-      "height": 400,
-      "type": "jpeg"
-    }
-  ]
+    "images": [
+        {
+            "name": "RainbowSunset",
+            "upload_url": "/uploads/RainbowSunset.jpeg",
+            "opencv_url": "",
+            "id": 1,
+            "width": 600,
+            "height": 400,
+            "type": "jpeg"
+        },
+        {
+            "name": "Stormy",
+            "upload_url": "/uploads/Stormy.jpeg",
+            "opencv_url": "",
+            "id": 2,
+            "width": 600,
+            "height": 400,
+            "type": "jpeg"
+        },
+        {
+            "name": "Dragon",
+            "upload_url": "/uploads/WaterDragon.jpeg",
+            "opencv_url": "",
+            "id": 3,
+            "width": 600,
+            "height": 400,
+            "type": "jpeg"
+        },
+        {
+            "name": "Pastels",
+            "upload_url": "/uploads/Pastels.jpeg",
+            "opencv_url": "",
+            "id": 4,
+            "width": 600,
+            "height": 400
+        }
+    ]
 }

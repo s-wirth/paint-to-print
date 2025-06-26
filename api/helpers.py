@@ -116,12 +116,18 @@ def check_valid_image(file):
     bool
         True if the file exists and is a valid image, False otherwise.
     """
-    if find_file(file) and file.split(".")[1] in _EXTENSIONS_:
+    if file.split(".")[1] in _EXTENSIONS_:
         pprint (f'File is a valid image: {file}')
         return True
     else:
         pprint (f'File is not a valid image: {file}, only {", ".join(_EXTENSIONS_)} files are allowed.')
         return False
+
+def get_file_name(file):
+    return file.split(".")[0]
+
+def get_file_upload_url(file):
+    return f'/uploads/{file}'
 
 def make_processing_file_name(file, sub_dir = '', suffix = '_processed', fileType = 'jpg'):
     """

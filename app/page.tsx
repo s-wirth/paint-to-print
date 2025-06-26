@@ -8,6 +8,13 @@ export default function Paint2Print() {
   const [uploadedImages, setUploadedImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState({});
   const [allImages, setAllImages] = useState([]);
+  const [fileToUpload, setFileToUpload] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [responseData, setResponseData] = useState({
+    message: "",
+    fileName: "",
+    status: "",
+  });
 
   const fetchUploads = async () => {
     const res = await fetch("/api/get-all-uploads");
@@ -28,6 +35,22 @@ export default function Paint2Print() {
     fetchUploads();
     fetchImageMeta();
   }, []);
+
+
+  const handleFileChange = (event) => {
+    setFileToUpload(event.target.files[0]);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("file", fileToUpload);
+
+    const response = await fetch("/api/upload-image", {
+      method: "POST",
+      body: formData,
+    });
+  };
 
   console.log('allImages', allImages)
   return (
@@ -50,6 +73,12 @@ export default function Paint2Print() {
         )}
       </div>
       <div className={styles.up_and_down_loads_container}>
+        <h2>Upload an Image</h2>
+        <form onSubmit={handleSubmit}>
+          <input type="file" onChange={handleFileChange} />
+          <button type="submit">Upload</button>
+        </form>
+        <h2>All Images</h2>
         <ul className={styles.uploaded_images}>
           {allImages.length > 0 &&
             allImages.map((image) => (
