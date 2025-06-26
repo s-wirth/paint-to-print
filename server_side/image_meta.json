@@ -1,0 +1,22 @@
+{
+  "images": [
+    {
+      "name": "RainbowSunset",
+      "upload_url": "/uploads/RainbowSunset.jpeg",
+      "opencv_url": "",
+      "id": 1,
+      "width": 600,
+      "height": 400,
+      "type": "jpeg"
+    },
+    {
+      "name": "Stormy",
+      "upload_url": "/uploads/Stormy.jpeg",
+      "opencv_url": "",
+      "id": 2,
+      "width": 600,
+      "height": 400,
+      "type": "jpeg"
+    }
+  ]
+}
