@@ -1,88 +1,82 @@
 {
-    "images": [
-        {
-            "customFileName": "RainbowSunset",
-            "name": "RainbowSunset",
-            "upload_url": "/uploads/RainbowSunset.jpeg",
-            "opencv_url": "",
-            "id": 1,
-            "width": 600,
-            "height": 400,
-            "type": "jpeg"
-        },
-        {
-            "customFileName": "Stormy",
-            "name": "Stormy",
-            "upload_url": "/uploads/Stormy.jpeg",
-            "opencv_url": "",
-            "id": 2,
-            "width": 600,
-            "height": 400,
-            "type": "jpeg"
-        },
-        {
-            "customFileName": "Dragon",
-            "name": "Dragon",
-            "upload_url": "/uploads/WaterDragon.jpeg",
-            "opencv_url": "",
-            "id": 3,
-            "width": 600,
-            "height": 400,
-            "type": "jpeg"
-        },
-        {
-            "customFileName": "Pastels",
-            "name": "Pastels",
-            "upload_url": "/uploads/Pastels.jpeg",
-            "opencv_url": "",
-            "id": 4,
-            "width": 600,
-            "height": 400
-        },
-        {
-            "customFileName": "FANCY",
-            "filename": "Nebula.jpeg",
-            "upload_url": "/uploads/Nebula.jpeg",
-            "opencv_url": "",
-            "id": 5,
-            "width": 600,
-            "height": 400
-        },
-        {
-            "customFileName": "dreams",
-            "filename": "DreamySunset.jpeg",
-            "upload_url": "/uploads/DreamySunset.jpeg",
-            "opencv_url": "",
-            "id": 6,
-            "width": 600,
-            "height": 400
-        },
-        {
-            "customFileName": "child",
-            "filename": "ChildPortrait.jpeg",
-            "upload_url": "/uploads/ChildPortrait.jpeg",
-            "opencv_url": "",
-            "id": 7,
-            "width": 600,
-            "height": 400
-        },
-        {
-            "customFileName": "amber",
-            "filename": "AmberSunset.jpeg",
-            "upload_url": "/uploads/AmberSunset.jpeg",
-            "opencv_url": "",
-            "id": 8,
-            "width": 600,
-            "height": 400
-        },
-        {
-            "customFileName": "fire",
-            "filename": "FierySunset.jpeg",
-            "upload_url": "/uploads/FierySunset.jpeg",
-            "opencv_url": "",
-            "id": 9,
-            "width": 600,
-            "height": 400
-        }
-    ]
+    "1": {
+        "fileName": "DreamySunset",
+        "customName": "DreamySunset",
+        "uploadURL": "/uploads/DreamySunset.jpeg",
+        "id": 1,
+        "width": 600,
+        "height": 400
+    },
+    "2": {
+        "fileName": "Nebula",
+        "customName": "Nebula",
+        "uploadURL": "/uploads/Nebula.jpeg",
+        "id": 2,
+        "width": 600,
+        "height": 400
+    },
+    "3": {
+        "fileName": "AmberSunset",
+        "customName": "AmberSunset",
+        "uploadURL": "/uploads/AmberSunset.jpeg",
+        "id": 3,
+        "width": 600,
+        "height": 400
+    },
+    "4": {
+        "fileName": "RainbowSunset",
+        "customName": "RainbowSunset",
+        "uploadURL": "/uploads/RainbowSunset.jpeg",
+        "id": 4,
+        "width": 600,
+        "height": 400
+    },
+    "5": {
+        "fileName": "ChaosStorm",
+        "customName": "ChaosStorm",
+        "uploadURL": "/uploads/ChaosStorm.jpeg",
+        "id": 5,
+        "width": 600,
+        "height": 400
+    },
+    "6": {
+        "fileName": "FierySunset",
+        "customName": "FierySunset",
+        "uploadURL": "/uploads/FierySunset.jpeg",
+        "id": 6,
+        "width": 600,
+        "height": 400
+    },
+    "7": {
+        "fileName": "Pastels",
+        "customName": "Pastels",
+        "uploadURL": "/uploads/Pastels.jpeg",
+        "id": 7,
+        "width": 600,
+        "height": 400
+    },
+    "8": {
+        "fileName": "Stormy",
+        "customName": "Stormy",
+        "uploadURL": "/uploads/Stormy.jpeg",
+        "id": 8,
+        "width": 600,
+        "height": 400
+    },
+    "9": {
+        "fileName": "ChildPortrait",
+        "customName": "ChildPortrait",
+        "uploadURL": "/uploads/ChildPortrait.jpeg",
+        "id": 9,
+        "width": 600,
+        "height": 400
+    },
+    "10": {
+        "fileName": "WaterDragon",
+        "customName": "WaterDragon",
+        "uploadURL": "/uploads/WaterDragon.jpeg",
+        "id": 10,
+        "width": 600,
+        "height": 400
+    }
 }

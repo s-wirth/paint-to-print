@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function Paint2Print() {
   const [uploadedImages, setUploadedImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState({});
-  const [allImages, setAllImages] = useState([]);
+  const [allImages, setAllImages] = useState({});
   const [fileToUpload, setFileToUpload] = useState(null);
   const [customFileName, setCustomFileName] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -28,8 +28,9 @@ export default function Paint2Print() {
       method: "GET",
     });
     const data = await res.json();
-    setAllImages(data.images);
-    setSelectedImage(data.images[0]);
+    console.log('data.images', data)
+    setAllImages(data);
+    setSelectedImage(data["1"]);
   };
 
   useEffect(() => {
@@ -40,6 +41,17 @@ export default function Paint2Print() {
 
   const handleFileChange = (event) => {
     setFileToUpload(event.target.files[0]);
+  };
+
+  const handleDelete = async (imageID) => {
+    const response = await fetch(`/api/delete-image`, {
+      method: "POST",
+      body: JSON.stringify(imageID),
+    });
+    if (response.ok) {
+      fetchUploads();
+      fetchImageMeta();
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -60,6 +72,15 @@ export default function Paint2Print() {
     }
   };
 
+  const makeMeta = async () => {
+    const response = await fetch("/api/make-meta", {
+      method: "GET",
+    });
+    if (response.ok) {
+      fetchImageMeta();
+    }
+  };
+
   return (
     <main className={styles.main}>
       <div className={styles.parameter_container}>
@@ -70,9 +91,10 @@ export default function Paint2Print() {
       </div>
       <div className={styles.display_container}>
         <h2>Display</h2>
+        {JSON.stringify(allImages) == "{}" && <button onClick={() => makeMeta()}>Make Meta</button>}
         {JSON.stringify(selectedImage) !== "{}" && (
           <Image
-            src={selectedImage.upload_url}
+            src={selectedImage.uploadURL}
             alt="Selected Image"
             width={600}
             height={400}
@@ -88,13 +110,12 @@ export default function Paint2Print() {
         </form>
         <h2>All Images</h2>
         <div className={styles.uploaded_images}>
-          {allImages.length > 0 &&
-            allImages.toReversed().map((image) => (
-              <div className={styles.uploaded_image_wrapper} key={image.id} >
-                <div className={styles.uploaded_image} onClick={() => setSelectedImage(image)}>{image.customFileName}</div>
-                <div className={styles.delete_image}>x</div>
-              </div>
-            ))}
+          {Object.values(allImages).map((image) => (
+            <div className={styles.uploaded_image_wrapper} key={image.id}>
+              <div className={styles.uploaded_image_name}>{image.customName}</div>
+              <div className={styles.uploaded_image_delete} onClick={() => handleDelete(image.id)}>X</div>
+            </div>
+          ))}
         </div>
       </div>
     </main>

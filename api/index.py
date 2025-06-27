@@ -43,6 +43,19 @@ def init():
     )
 
 
+@app.route("/api/make-meta", methods=["GET"])
+def makeMeta():
+    allFiles = os.listdir(PATH_TO_UPLOADS)
+    files = [
+        f
+        for f in allFiles
+        if helpers.check_valid_image(PATH_TO_UPLOADS + f)
+    ]
+    if helpers.makeImageMetaData(files, PATH_TO_IMAGE_META):
+        return json.dumps({"message": "success"})
+    return json.dumps({"message": "failed"})
+
+
 @app.route("/api/get-all-uploads", methods=["GET"])
 def getAllUploads():
     allFiles = os.listdir(PATH_TO_UPLOADS)
@@ -59,7 +72,6 @@ def imageMeta():
         return
     with open(PATH_TO_IMAGE_META, encoding="utf-8") as json_file:
         data = json.load(json_file)
-    helpers.pprint(data)
     return json.dumps(data)
 
 
@@ -109,7 +121,6 @@ def uploadImage():
     with open(PATH_TO_IMAGE_META, "r") as json_file:
         image_meta_data = json.load(json_file)
     with open(PATH_TO_IMAGE_META, "w") as json_file:
-        helpers.pprint(image_meta_data)
         image_meta_data["images"].append(
             {
                 "customFileName": customFileName,
@@ -127,6 +138,30 @@ def uploadImage():
             {
                 "message": f"File uploaded successfully to {PATH_TO_UPLOADS}",
                 "filename": filename,
+                "status": 200,
+            }
+        ),
+        200,
+    )
+
+@app.route("/api/delete-image", methods=["POST"])
+def deleteImage():
+    helpers.pprint('hello')
+    helpers.pprint(request.form)
+    if request.method != "POST":
+        return
+    image_meta_data = {}
+    with open(PATH_TO_IMAGE_META, "r") as json_file:
+        image_meta_data = json.load(json_file)
+    with open(PATH_TO_IMAGE_META, "w") as json_file:
+        delFile = image_meta_data["images"].pop(imageID)
+        helpers.pprint(f'Deleting file: {delFile}')
+        json_file.write(json.dumps(image_meta_data, indent=4))
+    os.remove(PATH_TO_UPLOADS + image_meta_data["images"][imageID]["filename"])
+    return (
+        json.dumps(
+            {
+                "message": f"File deleted successfully to {PATH_TO_UPLOADS}",
                 "status": 200,
             }
         ),

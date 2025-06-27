@@ -1,5 +1,6 @@
 import sys
 import os
+import json
 
 
 #######################################################################
@@ -128,6 +129,24 @@ def get_file_name(file):
 
 def get_file_upload_url(file):
     return f'/uploads/{file}'
+
+def makeImageMetaData(files, jsonFile):
+    imageMetaData = {}
+    pprint('__________________________________________')
+    pprint(files)
+    for id, file in enumerate(files, start=1):
+        imageMetaData[id] = {
+            "fileName": get_file_name(file),
+            "customName": get_file_name(file),
+            "uploadURL": get_file_upload_url(file),
+            "id": id,
+            "width": 600,
+            "height": 400
+        }
+    with open(jsonFile, "w") as file:
+        file.write(json.dumps(imageMetaData, indent=4))
+    return True
+            
 
 def make_processing_file_name(file, sub_dir = '', suffix = '_processed', fileType = 'jpg'):
     """

@@ -9,3 +9,12 @@ export type ImageInterface = {
   width: number;
   height: number;
 };
+
+export const type ImageMetaData = {
+  fileName: string,
+  customName: string,
+  uploadURL: string,
+  id: number,
+  width: number,
+  height: number
+}
