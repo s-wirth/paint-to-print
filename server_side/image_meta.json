@@ -1,6 +1,7 @@
 {
     "images": [
         {
+            "customFileName": "RainbowSunset",
             "name": "RainbowSunset",
             "upload_url": "/uploads/RainbowSunset.jpeg",
             "opencv_url": "",
@@ -10,6 +11,7 @@
             "type": "jpeg"
         },
         {
+            "customFileName": "Stormy",
             "name": "Stormy",
             "upload_url": "/uploads/Stormy.jpeg",
             "opencv_url": "",
@@ -19,6 +21,7 @@
             "type": "jpeg"
         },
         {
+            "customFileName": "Dragon",
             "name": "Dragon",
             "upload_url": "/uploads/WaterDragon.jpeg",
             "opencv_url": "",
@@ -28,10 +31,56 @@
             "type": "jpeg"
         },
         {
+            "customFileName": "Pastels",
             "name": "Pastels",
             "upload_url": "/uploads/Pastels.jpeg",
             "opencv_url": "",
             "id": 4,
+            "width": 600,
+            "height": 400
+        },
+        {
+            "customFileName": "FANCY",
+            "filename": "Nebula.jpeg",
+            "upload_url": "/uploads/Nebula.jpeg",
+            "opencv_url": "",
+            "id": 5,
+            "width": 600,
+            "height": 400
+        },
+        {
+            "customFileName": "dreams",
+            "filename": "DreamySunset.jpeg",
+            "upload_url": "/uploads/DreamySunset.jpeg",
+            "opencv_url": "",
+            "id": 6,
+            "width": 600,
+            "height": 400
+        },
+        {
+            "customFileName": "child",
+            "filename": "ChildPortrait.jpeg",
+            "upload_url": "/uploads/ChildPortrait.jpeg",
+            "opencv_url": "",
+            "id": 7,
+            "width": 600,
+            "height": 400
+        },
+        {
+            "customFileName": "amber",
+            "filename": "AmberSunset.jpeg",
+            "upload_url": "/uploads/AmberSunset.jpeg",
+            "opencv_url": "",
+            "id": 8,
+            "width": 600,
+            "height": 400
+        },
+        {
+            "customFileName": "fire",
+            "filename": "FierySunset.jpeg",
+            "upload_url": "/uploads/FierySunset.jpeg",
+            "opencv_url": "",
+            "id": 9,
             "width": 600,
             "height": 400
         }

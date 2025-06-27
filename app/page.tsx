@@ -9,6 +9,7 @@ export default function Paint2Print() {
   const [selectedImage, setSelectedImage] = useState({});
   const [allImages, setAllImages] = useState([]);
   const [fileToUpload, setFileToUpload] = useState(null);
+  const [customFileName, setCustomFileName] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [responseData, setResponseData] = useState({
     message: "",
@@ -45,14 +46,20 @@ export default function Paint2Print() {
     event.preventDefault();
     const formData = new FormData();
     formData.append("file", fileToUpload);
+    formData.append("customFileName", customFileName);
 
     const response = await fetch("/api/upload-image", {
       method: "POST",
       body: formData,
     });
+    if (response.ok) {
+      fetchUploads();
+      fetchImageMeta();
+      setCustomFileName("");
+      setFileToUpload(null);
+    }
   };
 
-  console.log('allImages', allImages)
   return (
     <main className={styles.main}>
       <div className={styles.parameter_container}>
@@ -76,17 +83,19 @@ export default function Paint2Print() {
         <h2>Upload an Image</h2>
         <form onSubmit={handleSubmit}>
           <input type="file" onChange={handleFileChange} />
+          <input type="text"  onChange={(e) => setCustomFileName(e.target.value)}/>
           <button type="submit">Upload</button>
         </form>
         <h2>All Images</h2>
-        <ul className={styles.uploaded_images}>
+        <div className={styles.uploaded_images}>
           {allImages.length > 0 &&
-            allImages.map((image) => (
-              <li key={image.id} onClick={() => setSelectedImage(image)}>
-                <p>{image.name}</p>
-              </li>
+            allImages.toReversed().map((image) => (
+              <div className={styles.uploaded_image_wrapper} key={image.id} >
+                <div className={styles.uploaded_image} onClick={() => setSelectedImage(image)}>{image.customFileName}</div>
+                <div className={styles.delete_image}>x</div>
+              </div>
             ))}
-        </ul>
+        </div>
       </div>
     </main>
   );

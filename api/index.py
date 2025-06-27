@@ -77,6 +77,7 @@ def uploadImage():
             }
         )
     file = request.files["file"]
+    customFileName = request.form.get("customFileName") or helpers.get_file_name(file.filename)
     # If the user does not select a file, the browser submits an
     # empty file without a filename.
     if file.filename == "":
@@ -111,7 +112,8 @@ def uploadImage():
         helpers.pprint(image_meta_data)
         image_meta_data["images"].append(
             {
-                "name": helpers.get_file_name(filename),
+                "customFileName": customFileName,
+                "filename": filename,
                 "upload_url": helpers.get_file_upload_url(filename),
                 "opencv_url": "",
                 "id": len(image_meta_data["images"]) + 1,
