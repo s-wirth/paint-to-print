@@ -115,7 +115,7 @@ export default function Paint2Print() {
         <h2>All Images</h2>
         <div className={styles.uploaded_images}>
           {Object.values(allImages).map((image) => (
-            <div className={styles.uploaded_image_wrapper} key={image.id}>
+            <div className={styles.uploaded_image_wrapper} key={image.id} onClick={() => setSelectedImage(image)}>
               <div className={styles.uploaded_image_name}>{image.customName}</div>
               <div className={styles.uploaded_image_delete} onClick={() => handleDelete(image.id)}>X</div>
             </div>
