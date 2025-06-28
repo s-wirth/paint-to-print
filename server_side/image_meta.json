@@ -1,20 +1,4 @@
 {
-    "1": {
-        "fileName": "DreamySunset",
-        "customName": "DreamySunset",
-        "uploadURL": "/uploads/DreamySunset.jpeg",
-        "id": 1,
-        "width": 600,
-        "height": 400
-    },
-    "2": {
-        "fileName": "Nebula",
-        "customName": "Nebula",
-        "uploadURL": "/uploads/Nebula.jpeg",
-        "id": 2,
-        "width": 600,
-        "height": 400
-    },
     "3": {
         "fileName": "AmberSunset",
         "customName": "AmberSunset",
@@ -36,14 +20,6 @@
         "customName": "ChaosStorm",
         "uploadURL": "/uploads/ChaosStorm.jpeg",
         "id": 5,
-        "width": 600,
-        "height": 400
-    },
-    "6": {
-        "fileName": "FierySunset",
-        "customName": "FierySunset",
-        "uploadURL": "/uploads/FierySunset.jpeg",
-        "id": 6,
         "width": 600,
         "height": 400
     },

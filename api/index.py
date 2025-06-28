@@ -146,18 +146,20 @@ def uploadImage():
 
 @app.route("/api/delete-image", methods=["POST"])
 def deleteImage():
-    helpers.pprint('hello')
-    helpers.pprint(request.form)
+    helpers.pprint('######################################################################')
+    helpers.pprint(request.form.get("imageID"))
     if request.method != "POST":
         return
     image_meta_data = {}
+    imageID = request.form.get("imageID")
+    helpers.pprint(request.form)
     with open(PATH_TO_IMAGE_META, "r") as json_file:
         image_meta_data = json.load(json_file)
     with open(PATH_TO_IMAGE_META, "w") as json_file:
-        delFile = image_meta_data["images"].pop(imageID)
-        helpers.pprint(f'Deleting file: {delFile}')
+        helpers.pprint(image_meta_data)
+        helpers.pprint(image_meta_data[imageID])
+        del image_meta_data[imageID]
         json_file.write(json.dumps(image_meta_data, indent=4))
-    os.remove(PATH_TO_UPLOADS + image_meta_data["images"][imageID]["filename"])
     return (
         json.dumps(
             {

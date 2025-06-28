@@ -30,7 +30,7 @@ export default function Paint2Print() {
     const data = await res.json();
     console.log('data.images', data)
     setAllImages(data);
-    setSelectedImage(data["1"]);
+    setSelectedImage(Object.values(data)[0]);
   };
 
   useEffect(() => {
@@ -44,9 +44,11 @@ export default function Paint2Print() {
   };
 
   const handleDelete = async (imageID) => {
+    const formData = new FormData();
+    formData.append("imageID", imageID);
     const response = await fetch(`/api/delete-image`, {
       method: "POST",
-      body: JSON.stringify(imageID),
+      body: formData,
     });
     if (response.ok) {
       fetchUploads();
@@ -80,6 +82,8 @@ export default function Paint2Print() {
       fetchImageMeta();
     }
   };
+
+  console.log('selectedImage', selectedImage)
 
   return (
     <main className={styles.main}>
