@@ -127,7 +127,7 @@ export default function Paint2Print() {
               {key}: {"["} {value.x || "-"}, {value.y || "-"} {"]"}
             </div>
           ))}
-          <button name="reset" onClick={() => setRectanglePoints(blankPoints)}>
+          <button className={styles.rectangle_point_reset_button} name="reset" onClick={() => setRectanglePoints(blankPoints)}>
             Reset Points
           </button>
         </div>
