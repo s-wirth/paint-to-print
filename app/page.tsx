@@ -100,8 +100,8 @@ export default function Paint2Print() {
           <Image
             src={selectedImage.uploadURL}
             alt="Selected Image"
-            width={600}
-            height={400}
+            width={selectedImage.displayWidth}
+            height={selectedImage.displayHeight}
           />
         )}
       </div>

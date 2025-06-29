@@ -1,58 +1,112 @@
 {
+    "1": {
+        "fileName": "DreamySunset",
+        "customName": "DreamySunset",
+        "fullPath": "/Users/sophiewirth/dev/paint-to-print/public/uploads/DreamySunset.jpeg",
+        "uploadURL": "/uploads/DreamySunset.jpeg",
+        "id": 1,
+        "width": 4032,
+        "height": 3024,
+        "displayWidth": 667,
+        "displayHeight": 500
+    },
+    "2": {
+        "fileName": "Nebula",
+        "customName": "Nebula",
+        "fullPath": "/Users/sophiewirth/dev/paint-to-print/public/uploads/Nebula.jpeg",
+        "uploadURL": "/uploads/Nebula.jpeg",
+        "id": 2,
+        "width": 3024,
+        "height": 4032,
+        "displayWidth": 375,
+        "displayHeight": 500
+    },
     "3": {
         "fileName": "AmberSunset",
         "customName": "AmberSunset",
+        "fullPath": "/Users/sophiewirth/dev/paint-to-print/public/uploads/AmberSunset.jpeg",
         "uploadURL": "/uploads/AmberSunset.jpeg",
         "id": 3,
-        "width": 600,
-        "height": 400
+        "width": 4032,
+        "height": 3024,
+        "displayWidth": 667,
+        "displayHeight": 500
     },
     "4": {
         "fileName": "RainbowSunset",
         "customName": "RainbowSunset",
+        "fullPath": "/Users/sophiewirth/dev/paint-to-print/public/uploads/RainbowSunset.jpeg",
         "uploadURL": "/uploads/RainbowSunset.jpeg",
         "id": 4,
-        "width": 600,
-        "height": 400
+        "width": 3745,
+        "height": 2808,
+        "displayWidth": 667,
+        "displayHeight": 500
     },
     "5": {
         "fileName": "ChaosStorm",
         "customName": "ChaosStorm",
+        "fullPath": "/Users/sophiewirth/dev/paint-to-print/public/uploads/ChaosStorm.jpeg",
         "uploadURL": "/uploads/ChaosStorm.jpeg",
         "id": 5,
-        "width": 600,
-        "height": 400
+        "width": 4032,
+        "height": 3024,
+        "displayWidth": 667,
+        "displayHeight": 500
+    },
+    "6": {
+        "fileName": "FierySunset",
+        "customName": "FierySunset",
+        "fullPath": "/Users/sophiewirth/dev/paint-to-print/public/uploads/FierySunset.jpeg",
+        "uploadURL": "/uploads/FierySunset.jpeg",
+        "id": 6,
+        "width": 2095,
+        "height": 1578,
+        "displayWidth": 664,
+        "displayHeight": 500
     },
     "7": {
         "fileName": "Pastels",
         "customName": "Pastels",
+        "fullPath": "/Users/sophiewirth/dev/paint-to-print/public/uploads/Pastels.jpeg",
         "uploadURL": "/uploads/Pastels.jpeg",
         "id": 7,
-        "width": 600,
-        "height": 400
+        "width": 1946,
+        "height": 2595,
+        "displayWidth": 375,
+        "displayHeight": 500
     },
     "8": {
         "fileName": "Stormy",
         "customName": "Stormy",
+        "fullPath": "/Users/sophiewirth/dev/paint-to-print/public/uploads/Stormy.jpeg",
         "uploadURL": "/uploads/Stormy.jpeg",
         "id": 8,
-        "width": 600,
-        "height": 400
+        "width": 3903,
+        "height": 2894,
+        "displayWidth": 674,
+        "displayHeight": 500
     },
     "9": {
         "fileName": "ChildPortrait",
         "customName": "ChildPortrait",
+        "fullPath": "/Users/sophiewirth/dev/paint-to-print/public/uploads/ChildPortrait.jpeg",
         "uploadURL": "/uploads/ChildPortrait.jpeg",
         "id": 9,
-        "width": 600,
-        "height": 400
+        "width": 1512,
+        "height": 2016,
+        "displayWidth": 375,
+        "displayHeight": 500
     },
     "10": {
         "fileName": "WaterDragon",
         "customName": "WaterDragon",
+        "fullPath": "/Users/sophiewirth/dev/paint-to-print/public/uploads/WaterDragon.jpeg",
         "uploadURL": "/uploads/WaterDragon.jpeg",
         "id": 10,
-        "width": 600,
-        "height": 400
+        "width": 3441,
+        "height": 2707,
+        "displayWidth": 636,
+        "displayHeight": 500
     }
 }

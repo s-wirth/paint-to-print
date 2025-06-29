@@ -128,8 +128,8 @@ def uploadImage():
                 "upload_url": helpers.get_file_upload_url(filename),
                 "opencv_url": "",
                 "id": len(image_meta_data["images"]) + 1,
-                "width": 600,
-                "height": 400,
+                "width": helpers.get_image_dimensions(newFile)[1],
+                "height": helpers.get_image_dimensions(newFile)[0],
             }
         )
         json_file.write(json.dumps(image_meta_data, indent=4))

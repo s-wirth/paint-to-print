@@ -1,6 +1,8 @@
 import sys
 import os
+import math
 import json
+import cv2
 
 
 #######################################################################
@@ -124,6 +126,11 @@ def check_valid_image(file):
         pprint (f'File is not a valid image: {file}, only {", ".join(_EXTENSIONS_)} files are allowed.')
         return False
 
+def get_image_dimensions(image):
+    dimensions = cv2.imread(image).shape
+    pprint(f'Image dimensions: {dimensions}')
+    return dimensions
+
 def get_file_name(file):
     return file.split(".")[0]
 
@@ -132,16 +139,22 @@ def get_file_upload_url(file):
 
 def makeImageMetaData(files, jsonFile):
     imageMetaData = {}
-    pprint('__________________________________________')
-    pprint(files)
     for id, file in enumerate(files, start=1):
+        fileUploadURL = get_file_upload_url(file)
+        fullPath = f'{os.getcwd()}/public{get_file_upload_url(file)}'
+        imageHeight, imageWidth, _ = get_image_dimensions(fullPath)
+        displayHeight = 500
         imageMetaData[id] = {
             "fileName": get_file_name(file),
             "customName": get_file_name(file),
-            "uploadURL": get_file_upload_url(file),
+            "fullPath": fullPath,
+            "uploadURL": fileUploadURL,
             "id": id,
-            "width": 600,
-            "height": 400
+            "width": imageWidth,
+            "height": imageHeight,
+            "displayWidth": round((imageWidth / imageHeight) * displayHeight),
+            "displayHeight": displayHeight,
+            
         }
     with open(jsonFile, "w") as file:
         file.write(json.dumps(imageMetaData, indent=4))
