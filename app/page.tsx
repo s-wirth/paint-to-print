@@ -145,20 +145,22 @@ export default function Paint2Print() {
         )}
       </div>
       <div className={styles.up_and_down_loads_container}>
-        <h2>Upload an Image</h2>
-        <form onSubmit={handleSubmit}>
-          <input type="file" onChange={handleFileChange} />
+        <h2 className={styles.upload_header}>Upload an Image</h2>
+        <form onSubmit={handleSubmit} className={styles.upload_form}>
+          <input type="file" onChange={handleFileChange} className={styles.file_input}/>
           <input
+            id="customFileName"
             type="text"
             onChange={(e) => setCustomFileName(e.target.value)}
+            placeholder="Custom File Name"
           />
-          <button type="submit">Upload</button>
+          <button type="submit" className={styles.upload_button}>Upload</button>
         </form>
-        <h2>All Images</h2>
+        <h2 className={styles.upload_header}>All Images</h2>
         <div className={styles.uploaded_images}>
           {Object.values(allImages).map((image) => (
             <div
-              className={styles.uploaded_image_wrapper}
+              className={selectedImage.id === image.id ? styles.uploaded_image_wrapper_selected : styles.uploaded_image_wrapper }
               key={image.id}
               onClick={() => setSelectedImage(image)}
             >
