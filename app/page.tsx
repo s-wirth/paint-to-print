@@ -10,7 +10,7 @@ export default function Paint2Print() {
     topRight: { x: null, y: null },
     bottomLeft: { x: null, y: null },
     bottomRight: { x: null, y: null },
-  }
+  };
   const [rectanglePoints, setRectanglePoints] = useState(blankPoints);
   const [uploadedImages, setUploadedImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState({});
@@ -44,7 +44,6 @@ export default function Paint2Print() {
     fetchImageMeta();
   }, []);
 
-
   const handleFileChange = (event) => {
     setFileToUpload(event.target.files[0]);
   };
@@ -75,13 +74,16 @@ export default function Paint2Print() {
     const points = [imgX, imgY];
     for (const [key, value] of Object.entries(rectanglePoints)) {
       if (value.x === null && value.y === null) {
-        setRectanglePoints((prev) => ({ ...prev, [key]: { x: imgX, y: imgY } }));
+        setRectanglePoints((prev) => ({
+          ...prev,
+          [key]: { x: imgX, y: imgY },
+        }));
         break;
       }
     }
   };
 
-  console.log('rectanglePoints', rectanglePoints)
+  console.log("rectanglePoints", rectanglePoints);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -109,7 +111,6 @@ export default function Paint2Print() {
     }
   };
 
-
   return (
     <main className={styles.main}>
       <div className={styles.parameter_container}>
@@ -123,12 +124,16 @@ export default function Paint2Print() {
         <div className={styles.rectangle_point_wrapper}>
           {Object.entries(rectanglePoints).map(([key, value]) => (
             <div className={styles.rectangle_point} key={key}>
-              {key}: {"["} {(value.x || "-")}, {value.y || "-"} {"]"}
+              {key}: {"["} {value.x || "-"}, {value.y || "-"} {"]"}
             </div>
           ))}
-          <button name="reset" onClick={() => setRectanglePoints(blankPoints)}>Reset Points</button>
+          <button name="reset" onClick={() => setRectanglePoints(blankPoints)}>
+            Reset Points
+          </button>
         </div>
-        {JSON.stringify(allImages) == "{}" && <button onClick={() => makeMeta()}>Make Meta</button>}
+        {JSON.stringify(allImages) == "{}" && (
+          <button onClick={() => makeMeta()}>Make Meta</button>
+        )}
         {JSON.stringify(selectedImage) !== "{}" && (
           <Image
             src={selectedImage.uploadURL}
@@ -143,15 +148,29 @@ export default function Paint2Print() {
         <h2>Upload an Image</h2>
         <form onSubmit={handleSubmit}>
           <input type="file" onChange={handleFileChange} />
-          <input type="text"  onChange={(e) => setCustomFileName(e.target.value)}/>
+          <input
+            type="text"
+            onChange={(e) => setCustomFileName(e.target.value)}
+          />
           <button type="submit">Upload</button>
         </form>
         <h2>All Images</h2>
         <div className={styles.uploaded_images}>
           {Object.values(allImages).map((image) => (
-            <div className={styles.uploaded_image_wrapper} key={image.id} onClick={() => setSelectedImage(image)}>
-              <div className={styles.uploaded_image_name}>{image.customName}</div>
-              <div className={styles.uploaded_image_delete} onClick={() => handleDelete(image.id)}>X</div>
+            <div
+              className={styles.uploaded_image_wrapper}
+              key={image.id}
+              onClick={() => setSelectedImage(image)}
+            >
+              <div className={styles.uploaded_image_name}>
+                {image.customName}
+              </div>
+              <div
+                className={styles.uploaded_image_delete}
+                onClick={() => handleDelete(image.id)}
+              >
+                X
+              </div>
             </div>
           ))}
         </div>
