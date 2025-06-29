@@ -13,8 +13,8 @@ export default function Paint2Print() {
   };
   const [rectanglePoints, setRectanglePoints] = useState(blankPoints);
   const [uploadedImages, setUploadedImages] = useState([]);
-  const [selectedImage, setSelectedImage] = useState({});
-  const [allImages, setAllImages] = useState({});
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [allImages, setAllImages] = useState(null);
   const [fileToUpload, setFileToUpload] = useState(null);
   const [customFileName, setCustomFileName] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -36,7 +36,9 @@ export default function Paint2Print() {
     });
     const data = await res.json();
     setAllImages(data);
-    setSelectedImage(Object.values(data)[0]);
+    if (selectedImage == null) {
+      setSelectedImage(Object.values(data)[0]);
+    }
   };
 
   useEffect(() => {
@@ -117,9 +119,22 @@ export default function Paint2Print() {
       method: "POST",
       body: formData,
     });
-    console.log('selectedImage', selectedImage)
+    console.log("selectedImage", selectedImage);
     if (response.ok) {
-      console.log('response', response)
+      console.log("response", response);
+    }
+  };
+
+  const submitBoundingRectPointsToMeta = async () => {
+    const formData = new FormData();
+    formData.append("image", JSON.stringify(selectedImage));
+    formData.append("newValues", JSON.stringify(rectanglePoints));
+    const response = await fetch("/api/update-processing-meta", {
+      method: "POST",
+      body: formData,
+    });
+    if (response.ok) {
+      fetchImageMeta();
     }
   };
 
@@ -127,7 +142,12 @@ export default function Paint2Print() {
     <main className={styles.main}>
       <div className={styles.parameter_container}>
         <h2>Parameters</h2>
-        <button onClick={() => makeProcessingMeta()}>Make Processing Meta</button>
+        <button onClick={() => makeProcessingMeta()}>
+          Make Processing Meta
+        </button>
+        <button onClick={() => submitBoundingRectPointsToMeta()}>
+          Submit Bounding Rect Points to Meta
+        </button>
       </div>
       <div className={styles.display_container}>
         <div className={styles.rectangle_point_wrapper}>
@@ -136,14 +156,18 @@ export default function Paint2Print() {
               {key}: {"["} {value.x || "-"}, {value.y || "-"} {"]"}
             </div>
           ))}
-          <button className={styles.rectangle_point_reset_button} name="reset" onClick={() => setRectanglePoints(blankPoints)}>
+          <button
+            className={styles.rectangle_point_reset_button}
+            name="reset"
+            onClick={() => setRectanglePoints(blankPoints)}
+          >
             Reset Points
           </button>
         </div>
-        {JSON.stringify(allImages) == "{}" && (
+        {allImages && (
           <button onClick={() => makeMeta()}>Make Meta</button>
         )}
-        {JSON.stringify(selectedImage) !== "{}" && (
+        {selectedImage && (
           <Image
             className={styles.selected_image}
             src={selectedImage.uploadURL}
@@ -157,34 +181,45 @@ export default function Paint2Print() {
       <div className={styles.up_and_down_loads_container}>
         <h2 className={styles.upload_header}>Upload an Image</h2>
         <form onSubmit={handleSubmit} className={styles.upload_form}>
-          <input type="file" onChange={handleFileChange} className={styles.file_input}/>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            className={styles.file_input}
+          />
           <input
             id="customFileName"
             type="text"
             onChange={(e) => setCustomFileName(e.target.value)}
             placeholder="Custom File Name"
           />
-          <button type="submit" className={styles.upload_button}>Upload</button>
+          <button type="submit" className={styles.upload_button}>
+            Upload
+          </button>
         </form>
         <h2 className={styles.upload_header}>All Images</h2>
         <div className={styles.uploaded_images}>
-          {Object.values(allImages).map((image) => (
-            <div
-              className={selectedImage.id === image.id ? styles.uploaded_image_wrapper_selected : styles.uploaded_image_wrapper }
-              key={image.id}
-              onClick={() => setSelectedImage(image)}
-            >
-              <div className={styles.uploaded_image_name}>
-                {image.customName}
-              </div>
+          {allImages &&
+            Object.values(allImages).map((image) => (
               <div
-                className={styles.uploaded_image_delete}
-                onClick={() => handleDelete(image.id)}
+                className={
+                  selectedImage && selectedImage.id === image.id
+                    ? styles.uploaded_image_wrapper_selected
+                    : styles.uploaded_image_wrapper
+                }
+                key={image.id}
+                onClick={() => setSelectedImage(image)}
               >
-                X
+                <div className={styles.uploaded_image_name}>
+                  {image.customName}
+                </div>
+                <div
+                  className={styles.uploaded_image_delete}
+                  onClick={() => handleDelete(image.id)}
+                >
+                  X
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </main>

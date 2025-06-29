@@ -175,3 +175,12 @@ def imageProcessingMeta():
     helpers.pprint(request.form.get("image"))
     helpers.make_image_processing_meta(request.form.get("image"), PATH_TO_IMAGE_PROCESSING_META)
     return json.dumps({"message": "success"})
+
+@app.route("/api/update-processing-meta", methods=["POST"])
+def updateProcessingMeta():
+    if request.method != "POST":
+        return
+    helpers.pprint(request.form.get("image"))
+    helpers.pprint(request.form.get("newValues"))
+    helpers.update_processing_meta(request.form.get("image"), request.form.get("newValues"), PATH_TO_IMAGE_PROCESSING_META)
+    return json.dumps({"message": "success"})

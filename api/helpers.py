@@ -153,6 +153,21 @@ def make_image_processing_meta(image, jsonFile):
                 file.write(json.dumps(processing_meta, indent=4))
     return True
 
+def update_processing_meta(image, newValues, jsonFile):
+    newValues = json.loads(newValues)
+    image_meta = json.loads(image)
+    pprint('##################################################')
+    pprint(newValues)
+    pprint(image_meta)
+    with open(jsonFile, "r") as file:
+        processing_meta = json.load(file)
+    if image_meta["id"] not in processing_meta:
+        make_image_processing_meta(image, jsonFile)
+    processing_meta[str(image_meta["id"])].update(newValues)
+    with open(jsonFile, "w") as file:
+        file.write(json.dumps(processing_meta, indent=4))
+    return True
+
 def makeImageMetaData(files, jsonFile):
     imageMetaData = {}
     displayHeight = 500
