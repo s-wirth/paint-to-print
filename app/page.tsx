@@ -120,7 +120,6 @@ export default function Paint2Print() {
         </form>
       </div>
       <div className={styles.display_container}>
-        <h2>Display</h2>
         <div className={styles.rectangle_point_wrapper}>
           {Object.entries(rectanglePoints).map(([key, value]) => (
             <div className={styles.rectangle_point} key={key}>
@@ -136,6 +135,7 @@ export default function Paint2Print() {
         )}
         {JSON.stringify(selectedImage) !== "{}" && (
           <Image
+            className={styles.selected_image}
             src={selectedImage.uploadURL}
             alt="Selected Image"
             onClick={(e) => handleImageClick(e)}

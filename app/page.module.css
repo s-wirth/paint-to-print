@@ -12,6 +12,48 @@
 /* Styles for Display */
 .display_container {
   background: #13111e;
+
+  .rectangle_point_wrapper {
+    display: flex;
+    margin-bottom: 20px;
+    height: 50px;
+    align-items: center;
+    background-color: #1a191f;
+    color: white;
+    font-size: 14px;
+    border-bottom: 5px solid rgb(81, 15, 59);
+  }
+
+  .rectangle_point {
+    padding: 0 15px;
+    height: 100%;
+    display: flex;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    border-right: 5px solid rgb(81, 15, 59);
+  }
+
+  .rectangle_point_reset_button {
+    margin-left: auto;
+    margin-right: 2%;
+    height: 40px;
+    padding: 0 20px;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+    background-color: rgb(56, 4, 39);
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: rgb(98, 0, 59);
+    }
+  }
 }
 
 /* Styles for Uploads and Downloads */
@@ -57,48 +99,5 @@
   .uploaded_image_wrapper:hover {
     background-color: rgb(166, 77, 0);
     cursor: pointer;
-  }
-}
-
-.rectangle_point_wrapper {
-  display: flex;
-  margin: 20px 0;
-  height: 50px;
-  align-items: center;
-  background-color: #1a191f;
-  color: white;
-  font-size: 14px;
-  border-top: 5px solid rgb(81, 15, 59);
-  border-bottom: 5px solid rgb(81, 15, 59);
-}
-
-.rectangle_point {
-  padding: 0 15px;
-  height: 100%;
-  display: flex;
-  text-align: center;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  border-right: 5px solid rgb(81, 15, 59);
-}
-
-.rectangle_point_reset_button {
-  margin-left: auto;
-  margin-right: 2%;
-  height: 40px;
-  padding: 0 20px;
-  border-radius: 5px;
-  border: none;
-  text-align: center;
-  background-color:rgb(56, 4, 39);
-  color:white;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: rgb(98, 0, 59);
   }
 }
