@@ -5,6 +5,13 @@ import { ClientSideContext } from "./client_context";
 import Image from "next/image";
 
 export default function Paint2Print() {
+  const blankPoints = {
+    topLeft: { x: null, y: null },
+    topRight: { x: null, y: null },
+    bottomLeft: { x: null, y: null },
+    bottomRight: { x: null, y: null },
+  }
+  const [rectanglePoints, setRectanglePoints] = useState(blankPoints);
   const [uploadedImages, setUploadedImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState({});
   const [allImages, setAllImages] = useState({});
@@ -28,7 +35,6 @@ export default function Paint2Print() {
       method: "GET",
     });
     const data = await res.json();
-    console.log('data.images', data)
     setAllImages(data);
     setSelectedImage(Object.values(data)[0]);
   };
@@ -56,6 +62,26 @@ export default function Paint2Print() {
     }
   };
 
+  const handleImageClick = (e) => {
+    let ratioX = e.target.naturalWidth / e.target.offsetWidth;
+    let ratioY = e.target.naturalHeight / e.target.offsetHeight;
+
+    let domX = e.pageX + window.pageXOffset - e.target.offsetLeft;
+    let domY = e.pageY + window.pageYOffset - e.target.offsetTop;
+
+    let imgX = Math.floor(domX * ratioX);
+    let imgY = Math.floor(domY * ratioY);
+
+    const points = [imgX, imgY];
+    for (const [key, value] of Object.entries(rectanglePoints)) {
+      if (value.x === null && value.y === null) {
+        setRectanglePoints((prev) => ({ ...prev, [key]: { x: imgX, y: imgY } }));
+        break;
+      }
+    }
+  };
+
+  console.log('rectanglePoints', rectanglePoints)
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -83,7 +109,6 @@ export default function Paint2Print() {
     }
   };
 
-  console.log('selectedImage', selectedImage)
 
   return (
     <main className={styles.main}>
@@ -95,11 +120,20 @@ export default function Paint2Print() {
       </div>
       <div className={styles.display_container}>
         <h2>Display</h2>
+        <div className={styles.rectangle_point_wrapper}>
+          {Object.entries(rectanglePoints).map(([key, value]) => (
+            <div className={styles.rectangle_point} key={key}>
+              {key}: {"["} {(value.x || "-")}, {value.y || "-"} {"]"}
+            </div>
+          ))}
+          <button name="reset" onClick={() => setRectanglePoints(blankPoints)}>Reset Points</button>
+        </div>
         {JSON.stringify(allImages) == "{}" && <button onClick={() => makeMeta()}>Make Meta</button>}
         {JSON.stringify(selectedImage) !== "{}" && (
           <Image
             src={selectedImage.uploadURL}
             alt="Selected Image"
+            onClick={(e) => handleImageClick(e)}
             width={selectedImage.displayWidth}
             height={selectedImage.displayHeight}
           />

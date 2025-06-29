@@ -139,11 +139,11 @@ def get_file_upload_url(file):
 
 def makeImageMetaData(files, jsonFile):
     imageMetaData = {}
+    displayHeight = 500
     for id, file in enumerate(files, start=1):
         fileUploadURL = get_file_upload_url(file)
         fullPath = f'{os.getcwd()}/public{get_file_upload_url(file)}'
         imageHeight, imageWidth, _ = get_image_dimensions(fullPath)
-        displayHeight = 500
         imageMetaData[id] = {
             "fileName": get_file_name(file),
             "customName": get_file_name(file),
@@ -154,7 +154,7 @@ def makeImageMetaData(files, jsonFile):
             "height": imageHeight,
             "displayWidth": round((imageWidth / imageHeight) * displayHeight),
             "displayHeight": displayHeight,
-            
+
         }
     with open(jsonFile, "w") as file:
         file.write(json.dumps(imageMetaData, indent=4))
