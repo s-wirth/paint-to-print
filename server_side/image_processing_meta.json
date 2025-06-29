@@ -1,0 +1,24 @@
+{
+    "2": {
+        "fileName": "Nebula",
+        "customName": "Nebula",
+        "fullPath": "/Users/sophiewirth/dev/paint-to-print/public/uploads/Nebula.jpeg",
+        "uploadURL": "/uploads/Nebula.jpeg",
+        "id": 2,
+        "width": 3024,
+        "height": 4032,
+        "displayWidth": 375,
+        "displayHeight": 500
+    },
+    "4": {
+        "fileName": "RainbowSunset",
+        "customName": "RainbowSunset",
+        "fullPath": "/Users/sophiewirth/dev/paint-to-print/public/uploads/RainbowSunset.jpeg",
+        "uploadURL": "/uploads/RainbowSunset.jpeg",
+        "id": 4,
+        "width": 3745,
+        "height": 2808,
+        "displayWidth": 667,
+        "displayHeight": 500
+    }
+}

@@ -83,7 +83,6 @@ export default function Paint2Print() {
     }
   };
 
-  console.log("rectanglePoints", rectanglePoints);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -111,13 +110,24 @@ export default function Paint2Print() {
     }
   };
 
+  const makeProcessingMeta = async () => {
+    const formData = new FormData();
+    formData.append("image", JSON.stringify(selectedImage));
+    const response = await fetch("/api/image-processing-meta", {
+      method: "POST",
+      body: formData,
+    });
+    console.log('selectedImage', selectedImage)
+    if (response.ok) {
+      console.log('response', response)
+    }
+  };
+
   return (
     <main className={styles.main}>
       <div className={styles.parameter_container}>
         <h2>Parameters</h2>
-        <form action="">
-          <input name="param1" type="number" placeholder="Parameter 1" />
-        </form>
+        <button onClick={() => makeProcessingMeta()}>Make Processing Meta</button>
       </div>
       <div className={styles.display_container}>
         <div className={styles.rectangle_point_wrapper}>

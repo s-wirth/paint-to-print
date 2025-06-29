@@ -10,6 +10,7 @@ OPENCV_STORE_FOLDER = "public/opencv_store"
 DEFAULT_SETTINGS_JSON_FILE = "server_side/default_settings.json"
 USER_SETTINGS_JSON_FILE = "server_side/user_settings.json"
 IMAGE_META_JSON_FILE = "server_side/image_meta.json"
+IMAGE_PROCESSING_META_JSON_FILE = "server_side/image_processing_meta.json"
 
 app = Flask(__name__)
 
@@ -22,11 +23,13 @@ app.config["SECRET_KEY"] = "super secret key"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["OPENCV_STORE_FOLDER"] = OPENCV_STORE_FOLDER
 app.config["IMAGE_META_JSON"] = IMAGE_META_JSON_FILE
+app.config["IMAGE_PROCESSING_META_JSON"] = IMAGE_PROCESSING_META_JSON_FILE
 
 
 PATH_TO_UPLOADS = helpers.ending_slash(os.path.join(os.getcwd(), app.config["UPLOAD_FOLDER"]))
 PATH_TO_STORE = helpers.ending_slash(os.path.join(os.getcwd(), app.config["OPENCV_STORE_FOLDER"]))
 PATH_TO_IMAGE_META = os.path.join(os.getcwd(), app.config["IMAGE_META_JSON"])
+PATH_TO_IMAGE_PROCESSING_META = os.path.join(os.getcwd(), app.config["IMAGE_PROCESSING_META_JSON"])
 
 
 @app.route("/api/init", methods=["GET"])
@@ -146,18 +149,13 @@ def uploadImage():
 
 @app.route("/api/delete-image", methods=["POST"])
 def deleteImage():
-    helpers.pprint('######################################################################')
-    helpers.pprint(request.form.get("imageID"))
     if request.method != "POST":
         return
     image_meta_data = {}
     imageID = request.form.get("imageID")
-    helpers.pprint(request.form)
     with open(PATH_TO_IMAGE_META, "r") as json_file:
         image_meta_data = json.load(json_file)
     with open(PATH_TO_IMAGE_META, "w") as json_file:
-        helpers.pprint(image_meta_data)
-        helpers.pprint(image_meta_data[imageID])
         del image_meta_data[imageID]
         json_file.write(json.dumps(image_meta_data, indent=4))
     return (
@@ -169,3 +167,11 @@ def deleteImage():
         ),
         200,
     )
+
+@app.route("/api/image-processing-meta", methods=["POST"])
+def imageProcessingMeta():
+    if request.method != "POST":
+        return
+    helpers.pprint(request.form.get("image"))
+    helpers.make_image_processing_meta(request.form.get("image"), PATH_TO_IMAGE_PROCESSING_META)
+    return json.dumps({"message": "success"})

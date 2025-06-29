@@ -137,6 +137,22 @@ def get_file_name(file):
 def get_file_upload_url(file):
     return f'/uploads/{file}'
 
+def make_image_processing_meta(image, jsonFile):
+    processing_meta = {}
+    image_meta = json.loads(image)
+    if os.path.getsize(jsonFile) == 0:
+        with open(jsonFile, "w") as file:
+            processing_meta[image_meta["id"]] = image_meta
+            file.write(json.dumps(processing_meta, indent=4))
+    else: 
+        with open(jsonFile, "r") as file:
+            processing_meta = json.load(file)
+        if str(image_meta["id"]) not in processing_meta:
+            processing_meta[image_meta["id"]] = image_meta
+            with open(jsonFile, "w") as file:
+                file.write(json.dumps(processing_meta, indent=4))
+    return True
+
 def makeImageMetaData(files, jsonFile):
     imageMetaData = {}
     displayHeight = 500
