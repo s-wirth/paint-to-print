@@ -1,5 +1,4 @@
 import os
-import json
 import cv2
 from app_setup import *
 from generic_helpers import *
@@ -10,16 +9,18 @@ from generic_helpers import *
 # Image Processing Helper Functions                                 
 #######################################################################
 
-# ---------------------------------------------------------------------
-# CONSTANTS
-# ---------------------------------------------------------------------
-
-_EXTENSIONS_ = ["jpg", "png", "jpeg", "JPG", "PNG", "JPEG"]
 
 
 # ---------------------------------------------------------------------
 # FUNCTIONS
 # ---------------------------------------------------------------------
+
+def get_file_name(file):
+    return file.split(".")[0]
+
+def get_file_upload_url(file):
+    return f'/uploads/{file}'
+
 
 def check_directory(dirName):
     """
@@ -75,130 +76,3 @@ def find_file(file):
     else:
         pprint(f'File not found: {file}')
         return False
-
-def check_valid_image(file):
-    """
-    Checks if a given file exists and is a valid image.
-
-    Parameters
-    ----------
-    file : str
-        The file path to check.
-
-    Returns
-    -------
-    bool
-        True if the file exists and is a valid image, False otherwise.
-    """
-    if file.split(".")[1] in _EXTENSIONS_:
-        pprint (f'File is a valid image: {file}')
-        return True
-    else:
-        pprint (f'File is not a valid image: {file}, only {", ".join(_EXTENSIONS_)} files are allowed.')
-        return False
-
-def get_image_dimensions(image):
-    dimensions = cv2.imread(image).shape
-    pprint(f'Image dimensions: {dimensions}')
-    return dimensions
-
-def get_file_name(file):
-    return file.split(".")[0]
-
-def get_file_upload_url(file):
-    return f'/uploads/{file}'
-
-def make_image_processing_meta(image, jsonFile):
-    processing_meta = {}
-    image_meta = json.loads(image)
-    if os.path.getsize(jsonFile) == 0:
-        with open(jsonFile, "w") as file:
-            processing_meta[image_meta["id"]] = image_meta
-            file.write(json.dumps(processing_meta, indent=4))
-    else: 
-        with open(jsonFile, "r") as file:
-            processing_meta = json.load(file)
-        if str(image_meta["id"]) not in processing_meta:
-            processing_meta[image_meta["id"]] = image_meta
-            with open(jsonFile, "w") as file:
-                file.write(json.dumps(processing_meta, indent=4))
-    return True
-
-def update_processing_meta(image, newValues, jsonFile):
-    newValues = json.loads(newValues)
-    image_meta = json.loads(image)
-    pprint('##################################################')
-    pprint(newValues)
-    pprint(image_meta)
-    with open(jsonFile, "r") as file:
-        processing_meta = json.load(file)
-    if image_meta["id"] not in processing_meta:
-        make_image_processing_meta(image, jsonFile)
-    processing_meta[str(image_meta["id"])].update(newValues)
-    with open(jsonFile, "w") as file:
-        file.write(json.dumps(processing_meta, indent=4))
-    return True
-
-def makeImageMetaData(files, jsonFile):
-    imageMetaData = {}
-    displayHeight = 500
-    for id, file in enumerate(files, start=1):
-        fileUploadURL = get_file_upload_url(file)
-        fullPath = f'{os.getcwd()}/public{get_file_upload_url(file)}'
-        imageHeight, imageWidth, _ = get_image_dimensions(fullPath)
-        imageMetaData[id] = {
-            "fileName": get_file_name(file),
-            "customName": get_file_name(file),
-            "fullPath": fullPath,
-            "uploadURL": fileUploadURL,
-            "id": id,
-            "width": imageWidth,
-            "height": imageHeight,
-            "displayWidth": round((imageWidth / imageHeight) * displayHeight),
-            "displayHeight": displayHeight,
-
-        }
-    with open(jsonFile, "w") as file:
-        file.write(json.dumps(imageMetaData, indent=4))
-    return True
-            
-
-def make_processing_file_name(file, sub_dir = '', suffix = '_processed', fileType = 'jpg'):
-    """
-    Generates a new file name with a specified suffix and file type, optionally
-    including a sub-directory.
-
-    Parameters
-    ----------
-    file : str
-        The original file name.
-    sub_dir : str, optional
-        The sub-directory to include in the new file name, default is an empty string.
-    suffix : str, optional
-        The suffix to append to the file name, default is '_processed'.
-    fileType : str, optional
-        The file extension for the new file name, default is 'jpg'.
-
-    Returns
-    -------
-    str
-        The newly generated file name with the specified suffix, file type, and
-        optionally a sub-directory.
-    """
-    if sub_dir != '':
-        file_name = file.split("/")[-1]
-        return (
-            PATH_TO_IMAGES
-            + ending_slash(sub_dir)
-            + file_name.split(".")[0]
-            + suffix
-            + '.'
-            + fileType
-        )
-    return file.split(".")[0] + suffix + '.' + fileType
-
-def prepare_image(file, subDir = '', suffix = '', fileType = 'jpg'):
-    if subDir != '' and not check_directory(ending_slash(subDir)):
-        check_or_create_directory(ending_slash(subDir))
-    if check_valid_image(file):
-        return make_processing_file_name(file, subDir, suffix, fileType)

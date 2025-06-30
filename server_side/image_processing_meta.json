@@ -64,20 +64,20 @@
         "displayWidth": 667,
         "displayHeight": 500,
         "topLeft": {
-            "x": 221,
-            "y": 214
+            "x": 431,
+            "y": 222
         },
         "topRight": {
-            "x": 396,
-            "y": 214
+            "x": 461,
+            "y": 230
         },
         "bottomLeft": {
-            "x": 221,
-            "y": 297
+            "x": 461,
+            "y": 230
         },
         "bottomRight": {
-            "x": 507,
-            "y": 326
+            "x": 461,
+            "y": 230
         },
         "contouredImage": "/Users/sophiewirth/dev/paint-to-print/public/opencv_store/DreamySunset_bb.jpg"
     }
