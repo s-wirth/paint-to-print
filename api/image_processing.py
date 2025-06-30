@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 import json
 from helpers import *
-from constants import *
 from app_setup import *
 
 def convertToGrayscale(pathToImage, imageName, folder):
@@ -17,7 +16,7 @@ def IP_create_contour_from_points(image):
     cv_image = cv2.imread(file)
     pprint('##################################################')
     pprint(cv_image.shape)
-    bounding_box_image = prepare_image(file, "", "_bb")
+    bounding_box_image = prepare_image(file, "opencv_store", "_bb")
     jsonFile = PATH_TO_IMAGE_PROCESSING_META
     with open(jsonFile, "r") as file:
         processing_meta = json.load(file)

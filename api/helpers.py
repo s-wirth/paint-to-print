@@ -3,18 +3,9 @@ import os
 import math
 import json
 import cv2
+from app_setup import *
+from generic_helpers import *
 
-
-#######################################################################
-# General Helper Functions                                 
-#######################################################################
-
-# ---------------------------------------------------------------------
-# FUNCTIONS
-# ---------------------------------------------------------------------
-
-def pprint(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
 
 
 #######################################################################
@@ -32,23 +23,6 @@ _EXTENSIONS_ = ["jpg", "png", "jpeg", "JPG", "PNG", "JPEG"]
 # FUNCTIONS
 # ---------------------------------------------------------------------
 
-def ending_slash(path):
-    """
-    Adds a trailing slash to a given path if it does not already exist.
-
-    Parameters
-    ----------
-    path : str
-        The path to add the trailing slash to.
-
-    Returns
-    -------
-    str
-        The path with a trailing slash.
-    """
-    if path[-1] != '/':
-        path += '/'
-    return path
 
 def check_directory(dirName):
     """
@@ -215,7 +189,15 @@ def make_processing_file_name(file, sub_dir = '', suffix = '_processed', fileTyp
         optionally a sub-directory.
     """
     if sub_dir != '':
-        return ending_slash(sub_dir) + file.split(".")[0] + suffix + '.' + fileType
+        file_name = file.split("/")[-1]
+        return (
+            PATH_TO_IMAGES
+            + sub_dir
+            + file_name.split(".")[0]
+            + suffix
+            + '.'
+            + fileType
+        )
     return file.split(".")[0] + suffix + '.' + fileType
 
 def prepare_image(file, subDir = '', suffix = '', fileType = 'jpg'):
