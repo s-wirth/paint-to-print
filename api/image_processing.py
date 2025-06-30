@@ -4,12 +4,6 @@ import json
 from helpers import *
 from app_setup import *
 
-def convertToGrayscale(pathToImage, imageName, folder):
-    prepare_image(imageName, folder)
-    image = cv2.imread(pathToImage)
-    grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    cv2.imwrite(f'{folder}/{imageName}', grayImage)
-
 def IP_create_contour_from_points(image):
     image_meta = json.loads(image)
     file = image_meta["fullPath"]
