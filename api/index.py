@@ -1,6 +1,7 @@
 from flask import Flask, flash, request, redirect
 from werkzeug.utils import secure_filename
 import os
+import cv2
 import json
 from image_meta_helpers import *
 from image_processing_helpers import *
@@ -44,7 +45,6 @@ def makeMeta():
 def imageProcessingMeta():
     if request.method != "POST":
         return
-    pprint(request.form.get("image"))
     make_image_processing_meta(
         request.form.get("image"), PATH_TO_IMAGE_PROCESSING_META
     )
@@ -55,8 +55,6 @@ def imageProcessingMeta():
 def updateProcessingMeta():
     if request.method != "POST":
         return
-    pprint(request.form.get("image"))
-    pprint(request.form.get("newValues"))
     update_processing_meta(
         request.form.get("image"),
         request.form.get("newValues"),
@@ -69,6 +67,9 @@ def updateProcessingMeta():
 def imageMeta():
     if request.method != "GET":
         return
+    
+    if os.path.getsize(PATH_TO_IMAGE_META) == 0:
+        makeMeta()
     with open(PATH_TO_IMAGE_META, encoding="utf-8") as json_file:
         data = json.load(json_file)
     return json.dumps(data)
@@ -133,18 +134,30 @@ def uploadImage():
     image_meta_data = {}
     with open(PATH_TO_IMAGE_META, "r") as json_file:
         image_meta_data = json.load(json_file)
+    pprint('####################################')
+    pprint(newFile)
     with open(PATH_TO_IMAGE_META, "w") as json_file:
-        image_meta_data["images"].append(
+        imageID = len(image_meta_data) + 1
+        displayHeight = 500
+        fileUploadURL = get_file_upload_url(newFile.split("/")[-1])
+        pprint(newFile)
+        imageHeight, imageWidth, _ = get_image_dimensions(newFile)
+        image_meta_data.update(
             {
-                "customFileName": customFileName,
-                "filename": filename,
-                "upload_url": get_file_upload_url(filename),
-                "opencv_url": "",
-                "id": len(image_meta_data["images"]) + 1,
-                "width": get_image_dimensions(newFile)[1],
-                "height": get_image_dimensions(newFile)[0],
+                f"{str(imageID)}:": {
+                    "fileName": get_file_name(newFile),
+                    "customName": get_file_name(newFile),
+                    "fullPath": newFile,
+                    "uploadURL": fileUploadURL,
+                    "id": imageID,
+                    "width": imageWidth,
+                    "height": imageHeight,
+                    "displayWidth": round((imageWidth / imageHeight) * displayHeight),
+                    "displayHeight": displayHeight,
+                }
             }
         )
+        pprint(image_meta_data)
         json_file.write(json.dumps(image_meta_data, indent=4))
     return (
         json.dumps(

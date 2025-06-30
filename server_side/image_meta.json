@@ -108,5 +108,16 @@
         "height": 2707,
         "displayWidth": 636,
         "displayHeight": 500
+    },
+    "11:": {
+        "fileName": "IMG_1724",
+        "customName": "IMG_1724",
+        "fullPath": "/Users/sophiewirth/dev/paint-to-print/public/uploads/IMG_1724.jpg",
+        "uploadURL": "/uploads/IMG_1724.jpg",
+        "id": 11,
+        "width": 1333,
+        "height": 1000,
+        "displayWidth": 666,
+        "displayHeight": 500
     }
 }

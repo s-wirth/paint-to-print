@@ -29,11 +29,9 @@ def check_valid_image(file):
         True if the file exists and is a valid image, False otherwise.
     """
     if file.split(".")[1] in _EXTENSIONS_:
-        pprint (f'File is a valid image: {file}')
         return True
-    else:
-        pprint (f'File is not a valid image: {file}, only {", ".join(_EXTENSIONS_)} files are allowed.')
-        return False
+    pprint (f'File is not a valid image: {file}, only {", ".join(_EXTENSIONS_)} files are allowed.')
+    return False
 
 def get_image_dimensions(image):
     dimensions = cv2.imread(image).shape

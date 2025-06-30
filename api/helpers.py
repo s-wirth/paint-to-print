@@ -16,7 +16,7 @@ from generic_helpers import *
 # ---------------------------------------------------------------------
 
 def get_file_name(file):
-    return file.split(".")[0]
+    return file.split("/")[-1].split(".")[0]
 
 def get_file_upload_url(file):
     return f'/uploads/{file}'
@@ -69,10 +69,7 @@ def find_file(file):
     bool
         True if the file exists, False otherwise.
     """
-    pprint(f'Searching for file: {file}')
     if os.path.exists(file):
-        pprint(f'File found: {file}')
         return True
-    else:
-        pprint(f'File not found: {file}')
-        return False
+    pprint(f'File not found: {file}')
+    return False

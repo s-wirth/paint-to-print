@@ -2,6 +2,8 @@ import os
 import json
 from app_setup import *
 from generic_helpers import *
+from image_processing_helpers import *
+from helpers import *
 
 
 def make_image_processing_meta(image, jsonFile):
@@ -23,9 +25,6 @@ def make_image_processing_meta(image, jsonFile):
 def update_processing_meta(image, newValues, jsonFile):
     newValues = json.loads(newValues)
     image_meta = json.loads(image)
-    pprint('##################################################')
-    pprint(newValues)
-    pprint(image_meta)
     with open(jsonFile, "r") as file:
         processing_meta = json.load(file)
     if image_meta["id"] not in processing_meta:

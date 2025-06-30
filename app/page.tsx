@@ -90,6 +90,7 @@ export default function Paint2Print() {
     const formData = new FormData();
     formData.append("file", fileToUpload);
     formData.append("customFileName", customFileName);
+    console.log('formData', formData)
 
     const response = await fetch("/api/upload-image", {
       method: "POST",
@@ -155,6 +156,10 @@ export default function Paint2Print() {
     <main className={styles.main}>
       <div className={styles.parameter_container}>
         <h2>Parameters</h2>
+
+        {!allImages && (
+          <button onClick={() => makeMeta()}>Make Meta</button>
+        )}
         <button onClick={() => makeProcessingMeta()}>
           Make Processing Meta
         </button>
@@ -178,9 +183,6 @@ export default function Paint2Print() {
             Reset Points
           </button>
         </div>
-        {allImages && (
-          <button onClick={() => makeMeta()}>Make Meta</button>
-        )}
         {selectedImage && (
           <Image
             className={styles.selected_image}
@@ -206,7 +208,7 @@ export default function Paint2Print() {
             onChange={(e) => setCustomFileName(e.target.value)}
             placeholder="Custom File Name"
           />
-          <button type="submit" className={styles.upload_button}>
+          <button type="submit" className={styles.upload_button} onClick={handleSubmit}>
             Upload
           </button>
         </form>
