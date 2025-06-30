@@ -1,0 +1,6 @@
+UPLOAD_FOLDER = "public/uploads"
+OPENCV_STORE_FOLDER = "public/opencv_store"
+DEFAULT_SETTINGS_JSON_FILE = "server_side/default_settings.json"
+USER_SETTINGS_JSON_FILE = "server_side/user_settings.json"
+IMAGE_META_JSON_FILE = "server_side/image_meta.json"
+IMAGE_PROCESSING_META_JSON_FILE = "server_side/image_processing_meta.json"

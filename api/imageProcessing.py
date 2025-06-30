@@ -7,3 +7,7 @@ def convertToGrayscale(pathToImage, imageName, folder):
     image = cv2.imread(pathToImage)
     grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     cv2.imwrite(f'{folder}/{imageName}', grayImage)
+
+def createBoundingBox(image, imageName, folder):
+    helpers.prepare_image(image, folder)
+    
