@@ -138,6 +138,19 @@ export default function Paint2Print() {
     }
   };
 
+  const createContour = async () => {
+    submitBoundingRectPointsToMeta();
+    const formData = new FormData();
+    formData.append("image", JSON.stringify(selectedImage));
+    const response = await fetch("/api/create-contour", {
+      method: "POST",
+      body: formData,
+    });
+    if (response.ok) {
+      fetchImageMeta();
+    }
+  };
+
   return (
     <main className={styles.main}>
       <div className={styles.parameter_container}>
@@ -148,6 +161,7 @@ export default function Paint2Print() {
         <button onClick={() => submitBoundingRectPointsToMeta()}>
           Submit Bounding Rect Points to Meta
         </button>
+        <button onClick={() => createContour()}>Create Contour</button>
       </div>
       <div className={styles.display_container}>
         <div className={styles.rectangle_point_wrapper}>

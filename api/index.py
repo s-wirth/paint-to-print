@@ -2,9 +2,9 @@ from flask import Flask, flash, request, redirect
 from werkzeug.utils import secure_filename
 import os
 import json
-import helpers
-from constants import *
+from helpers import *
 from app_setup import *
+from image_processing import *
 
 
 ########################################################################
@@ -13,8 +13,8 @@ from app_setup import *
 
 @app.route("/api/init", methods=["GET"])
 def init():
-    helpers.check_or_create_directory(PATH_TO_UPLOADS)
-    helpers.check_or_create_directory(PATH_TO_STORE)
+    check_or_create_directory(PATH_TO_UPLOADS)
+    check_or_create_directory(PATH_TO_STORE)
     return json.dumps(
         {
             "message": "initialized",
@@ -32,8 +32,8 @@ def init():
 @app.route("/api/make-meta", methods=["GET"])
 def makeMeta():
     allFiles = os.listdir(PATH_TO_UPLOADS)
-    files = [f for f in allFiles if helpers.check_valid_image(PATH_TO_UPLOADS + f)]
-    if helpers.makeImageMetaData(files, PATH_TO_IMAGE_META):
+    files = [f for f in allFiles if check_valid_image(PATH_TO_UPLOADS + f)]
+    if makeImageMetaData(files, PATH_TO_IMAGE_META):
         return json.dumps({"message": "success"})
     return json.dumps({"message": "failed"})
 
@@ -42,8 +42,8 @@ def makeMeta():
 def imageProcessingMeta():
     if request.method != "POST":
         return
-    helpers.pprint(request.form.get("image"))
-    helpers.make_image_processing_meta(
+    pprint(request.form.get("image"))
+    make_image_processing_meta(
         request.form.get("image"), PATH_TO_IMAGE_PROCESSING_META
     )
     return json.dumps({"message": "success"})
@@ -53,9 +53,9 @@ def imageProcessingMeta():
 def updateProcessingMeta():
     if request.method != "POST":
         return
-    helpers.pprint(request.form.get("image"))
-    helpers.pprint(request.form.get("newValues"))
-    helpers.update_processing_meta(
+    pprint(request.form.get("image"))
+    pprint(request.form.get("newValues"))
+    update_processing_meta(
         request.form.get("image"),
         request.form.get("newValues"),
         PATH_TO_IMAGE_PROCESSING_META,
@@ -80,7 +80,7 @@ def imageMeta():
 @app.route("/api/get-all-uploads", methods=["GET"])
 def getAllUploads():
     allFiles = os.listdir(PATH_TO_UPLOADS)
-    files = [f for f in allFiles if helpers.check_valid_image(PATH_TO_UPLOADS + f)]
+    files = [f for f in allFiles if check_valid_image(PATH_TO_UPLOADS + f)]
     return json.dumps({"files": files})
 
 
@@ -98,7 +98,7 @@ def uploadImage():
             }
         )
     file = request.files["file"]
-    customFileName = request.form.get("customFileName") or helpers.get_file_name(
+    customFileName = request.form.get("customFileName") or get_file_name(
         file.filename
     )
     # If the user does not select a file, the browser submits an
@@ -106,7 +106,7 @@ def uploadImage():
     if file.filename == "":
         flash("No selected file")
         return redirect(request.url)
-    if not file or not helpers.check_valid_image(file.filename):
+    if not file or not check_valid_image(file.filename):
         return (
             json.dumps(
                 {
@@ -136,11 +136,11 @@ def uploadImage():
             {
                 "customFileName": customFileName,
                 "filename": filename,
-                "upload_url": helpers.get_file_upload_url(filename),
+                "upload_url": get_file_upload_url(filename),
                 "opencv_url": "",
                 "id": len(image_meta_data["images"]) + 1,
-                "width": helpers.get_image_dimensions(newFile)[1],
-                "height": helpers.get_image_dimensions(newFile)[0],
+                "width": get_image_dimensions(newFile)[1],
+                "height": get_image_dimensions(newFile)[0],
             }
         )
         json_file.write(json.dumps(image_meta_data, indent=4))
@@ -180,3 +180,13 @@ def deleteImage():
         ),
         200,
     )
+
+
+########################################################################
+# IMAGE PROCESSING ROUTES
+########################################################################
+
+@app.route("/api/create-contour", methods=["POST"])
+def create_contour():
+    IP_create_contour_from_points(request.form.get("image"))
+    return json.dumps({"message": "success"})
