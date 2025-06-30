@@ -1,6 +1,4 @@
-import sys
 import os
-import math
 import json
 import cv2
 from app_setup import *
@@ -22,7 +20,6 @@ _EXTENSIONS_ = ["jpg", "png", "jpeg", "JPG", "PNG", "JPEG"]
 # ---------------------------------------------------------------------
 # FUNCTIONS
 # ---------------------------------------------------------------------
-
 
 def check_directory(dirName):
     """
@@ -192,7 +189,7 @@ def make_processing_file_name(file, sub_dir = '', suffix = '_processed', fileTyp
         file_name = file.split("/")[-1]
         return (
             PATH_TO_IMAGES
-            + sub_dir
+            + ending_slash(sub_dir)
             + file_name.split(".")[0]
             + suffix
             + '.'

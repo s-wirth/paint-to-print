@@ -64,20 +64,20 @@
         "displayWidth": 667,
         "displayHeight": 500,
         "topLeft": {
-            "x": 255,
-            "y": 141
+            "x": 221,
+            "y": 214
         },
         "topRight": {
-            "x": 255,
-            "y": 141
+            "x": 396,
+            "y": 214
         },
         "bottomLeft": {
-            "x": 255,
-            "y": 141
+            "x": 221,
+            "y": 297
         },
         "bottomRight": {
-            "x": 255,
-            "y": 141
+            "x": 507,
+            "y": 326
         }
     }
 }
