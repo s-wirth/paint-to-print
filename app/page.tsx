@@ -4,6 +4,7 @@ import styles from "./page.module.css";
 import { ClientSideContext } from "./client_context";
 import Image from "next/image";
 import ParameterContainer from "./Components/ParameterContainer";
+import ImageCanvas from "./Components/ImageCanvas";
 
 export default function Paint2Print() {
   const blankContourBox = {
@@ -71,6 +72,7 @@ export default function Paint2Print() {
     const nE = e.nativeEvent;
     const nELx = nE.layerX;
     const nELy = nE.layerY;
+    console.log('e', e)
 
     for (const [key, value] of Object.entries(clientParameters.contourBox)) {
       if (value.x === null && value.y === null) {
@@ -178,7 +180,8 @@ export default function Paint2Print() {
             Reset Points
           </button>
         </div>
-        {selectedImage && (
+        <ImageCanvas selectedImage={selectedImage} />
+        {false && (
           <div
             className={styles.image_container}
             style={{

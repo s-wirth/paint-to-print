@@ -1,0 +1,15 @@
+.canvas_container {
+  position: relative;
+}
+
+.image_canvas {
+  background-color:rgb(34, 159, 42);
+}
+
+.cP {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  background-color: rgba(255, 238, 0, 0.7);
+  border-radius: 50%;
+}

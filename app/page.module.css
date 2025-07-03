@@ -60,6 +60,7 @@
 
 
 .image_container {
+  cursor: pointer;
   background: red;
   position: relative;
   align-self: center;
