@@ -3,7 +3,7 @@ import json
 from app_setup import *
 from generic_helpers import *
 from image_processing_helpers import *
-from helpers import *
+from fs_helpers import *
 
 
 def make_image_processing_meta(image, jsonFile):

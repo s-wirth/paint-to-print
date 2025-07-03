@@ -3,7 +3,7 @@ import numpy as np
 import json
 from image_meta_helpers import *
 from image_processing_helpers import *
-from helpers import *
+from fs_helpers import *
 from app_setup import *
 
 def IP_create_contour_from_points(image):
