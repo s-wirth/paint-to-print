@@ -1,7 +1,7 @@
 from flask import Flask, flash, request, redirect
 from werkzeug.utils import secure_filename
 import os
-import cv2
+from classes.meta_classes import *
 import json
 from helpers.image_meta_helpers import *
 from helpers.image_processing_helpers import *
@@ -134,30 +134,27 @@ def uploadImage():
     image_meta_data = {}
     with open(PATH_TO_IMAGE_META, "r") as json_file:
         image_meta_data = json.load(json_file)
-    pprint('####################################')
-    pprint(newFile)
     with open(PATH_TO_IMAGE_META, "w") as json_file:
         imageID = len(image_meta_data) + 1
         displayHeight = 500
         fileUploadURL = get_file_upload_url(newFile.split("/")[-1])
         pprint(newFile)
         imageHeight, imageWidth, _ = get_image_dimensions(newFile)
-        image_meta_data.update(
-            {
-                f"{str(imageID)}:": {
-                    "fileName": get_file_name(newFile),
-                    "customName": get_file_name(newFile),
-                    "fullPath": newFile,
-                    "uploadURL": fileUploadURL,
-                    "id": imageID,
-                    "width": imageWidth,
-                    "height": imageHeight,
-                    "displayWidth": round((imageWidth / imageHeight) * displayHeight),
-                    "displayHeight": displayHeight,
-                }
-            }
+        new_file_meta = ImageMeta(
+            get_file_name(newFile),
+            get_file_name(newFile),
+            newFile,
+            fileUploadURL,
+            imageID,
+            imageWidth,
+            imageHeight,
+            round((imageWidth / imageHeight) * displayHeight),
+            displayHeight,
         )
+        pprint('####################################')
+        pprint(new_file_meta.__dict__())
         pprint(image_meta_data)
+        image_meta_data.update([(imageID, new_file_meta.__dict__())])
         json_file.write(json.dumps(image_meta_data, indent=4))
     return (
         json.dumps(
