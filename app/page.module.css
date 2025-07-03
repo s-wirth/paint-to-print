@@ -58,9 +58,22 @@
   }
 }
 
-.selected_image {
-  border: 20px solid #231f3a;
+
+.image_container {
+  background: red;
+  position: relative;
   align-self: center;
+}
+
+.cb_point{
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.selected_image {
 }
 
 /* Styles for Uploads and Downloads */
@@ -158,3 +171,8 @@
   cursor: pointer;
   background-color: #62003b;
 }
+
+/* ----------------------------------------- */
+/* ----------------------------------------- */
+/* ----------------------------------------- */
+/* ----------------------------------------- */

@@ -5,7 +5,6 @@ import { ClientSideContext } from "./client_context";
 import Image from "next/image";
 import ParameterContainer from "./Components/ParameterContainer";
 
-
 export default function Paint2Print() {
   const blankContourBox = {
     contourBox: {
@@ -26,7 +25,8 @@ export default function Paint2Print() {
     fileName: "",
     status: "",
   });
-  const [clientParameters, setClientParameters] = useState<ClientParameterInterface>(blankContourBox);
+  const [clientParameters, setClientParameters] =
+    useState<ClientParameterInterface>(blankContourBox);
 
   const fetchUploads = async () => {
     const res = await fetch("/api/get-all-uploads");
@@ -68,20 +68,14 @@ export default function Paint2Print() {
   };
 
   const updateContourBox = (e) => {
-    let ratioX = e.target.naturalWidth / e.target.offsetWidth;
-    let ratioY = e.target.naturalHeight / e.target.offsetHeight;
+    const nE = e.nativeEvent;
+    const nELx = nE.layerX;
+    const nELy = nE.layerY;
 
-    let domX = e.pageX + window.pageXOffset - e.target.offsetLeft;
-    let domY = e.pageY + window.pageYOffset - e.target.offsetTop;
-
-    let imgX = Math.floor(domX * ratioX);
-    let imgY = Math.floor(domY * ratioY);
-
-    const points = [imgX, imgY];
     for (const [key, value] of Object.entries(clientParameters.contourBox)) {
       if (value.x === null && value.y === null) {
-        const cB = {...clientParameters}
-        cB.contourBox[key] = { x: imgX, y: imgY }
+        const cB = { ...clientParameters };
+        cB.contourBox[key] = { x: nELx, y: nELy };
         setClientParameters(cB);
         break;
       }
@@ -93,7 +87,7 @@ export default function Paint2Print() {
     const formData = new FormData();
     formData.append("file", fileToUpload);
     formData.append("customFileName", customFileName);
-    console.log('formData', formData)
+    console.log("formData", formData);
 
     const response = await fetch("/api/upload-image", {
       method: "POST",
@@ -155,15 +149,12 @@ export default function Paint2Print() {
     }
   };
 
-  console.log('clientParameters', clientParameters)
   return (
     <main className={styles.main}>
       <div className={styles.parameter_container}>
         <h2>Parameters</h2>
         <ParameterContainer clientParameters={clientParameters} />
-        {!allImages && (
-          <button onClick={() => makeMeta()}>Make Meta</button>
-        )}
+        {!allImages && <button onClick={() => makeMeta()}>Make Meta</button>}
         <button onClick={() => makeProcessingMeta()}>
           Make Processing Meta
         </button>
@@ -188,14 +179,54 @@ export default function Paint2Print() {
           </button>
         </div>
         {selectedImage && (
-          <Image
-            className={styles.selected_image}
-            src={selectedImage.uploadURL}
-            alt="Selected Image"
+          <div
+            className={styles.image_container}
+            style={{
+              width: selectedImage.displayWidth,
+              height: selectedImage.displayHeight,
+            }}
             onClick={(e) => updateContourBox(e)}
-            width={selectedImage.displayWidth}
-            height={selectedImage.displayHeight}
-          />
+          >
+            <div
+              className={styles.cb_point}
+              style={{
+                display: `${clientParameters.contourBox["topLeft"].x ? "block" : "none"}`,
+                top: `${clientParameters.contourBox["topLeft"].y}px`,
+                left: `${clientParameters.contourBox["topLeft"].x}px`,
+              }}
+            />
+            <div
+              className={styles.cb_point}
+              style={{
+                display: `${clientParameters.contourBox["topRight"].x ? "block" : "none"}`,
+                top: `${clientParameters.contourBox["topRight"].y}px`,
+                left: `${clientParameters.contourBox["topRight"].x}px`,
+              }}
+            />
+            <div
+              className={styles.cb_point}
+              style={{
+                display: `${clientParameters.contourBox["bottomLeft"].x ? "block" : "none"}`,
+                top: `${clientParameters.contourBox["bottomLeft"].y}px`,
+                left: `${clientParameters.contourBox["bottomLeft"].x}px`,
+              }}
+            />
+            <div
+              className={styles.cb_point}
+              style={{
+                display: `${clientParameters.contourBox["bottomRight"].x ? "block" : "none"}`,
+                top: `${clientParameters.contourBox["bottomRight"].y}px`,
+                left: `${clientParameters.contourBox["bottomRight"].x}px`,
+              }}
+            />
+            <Image
+              className={styles.selected_image}
+              src={selectedImage.uploadURL}
+              alt="Selected Image"
+              width={selectedImage.displayWidth}
+              height={selectedImage.displayHeight}
+            />
+          </div>
         )}
       </div>
       <div className={styles.up_and_down_loads_container}>
@@ -212,7 +243,11 @@ export default function Paint2Print() {
             onChange={(e) => setCustomFileName(e.target.value)}
             placeholder="Custom File Name"
           />
-          <button type="submit" className={styles.upload_button} onClick={handleSubmit}>
+          <button
+            type="submit"
+            className={styles.upload_button}
+            onClick={handleSubmit}
+          >
             Upload
           </button>
         </form>
