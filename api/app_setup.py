@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 import os
-from generic_helpers import *
+from helpers.generic_helpers import *
 
 
 IMAGE_FOLDER = "public"

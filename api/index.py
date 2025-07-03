@@ -3,9 +3,9 @@ from werkzeug.utils import secure_filename
 import os
 import cv2
 import json
-from image_meta_helpers import *
-from image_processing_helpers import *
-from fs_helpers import *
+from helpers.image_meta_helpers import *
+from helpers.image_processing_helpers import *
+from helpers.fs_helpers import *
 from app_setup import *
 from image_processing import *
 
