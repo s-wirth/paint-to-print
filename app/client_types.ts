@@ -10,11 +10,23 @@ export type ImageInterface = {
   height: number;
 };
 
-export const type ImageMetaData = {
-  fileName: string,
-  customName: string,
-  uploadURL: string,
-  id: number,
-  width: number,
-  height: number
-}
+export type ClientParameterInterface = {
+  contourBox: {
+    topLeft: {
+      x: number | null;
+      y: number | null;
+    };
+    topRight: {
+      x: number | null;
+      y: number | null;
+    };
+    bottomLeft: {
+      x: number | null;
+      y: number | null;
+    };
+    bottomRight: {
+      x: number | null;
+      y: number | null;
+    };
+  };
+};

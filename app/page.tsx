@@ -3,15 +3,18 @@ import { createContext, useContext, useState, useEffect } from "react";
 import styles from "./page.module.css";
 import { ClientSideContext } from "./client_context";
 import Image from "next/image";
+import ParameterContainer from "./Components/ParameterContainer";
+
 
 export default function Paint2Print() {
-  const blankPoints = {
-    topLeft: { x: null, y: null },
-    topRight: { x: null, y: null },
-    bottomLeft: { x: null, y: null },
-    bottomRight: { x: null, y: null },
+  const blankContourBox = {
+    contourBox: {
+      topLeft: { x: null, y: null },
+      topRight: { x: null, y: null },
+      bottomLeft: { x: null, y: null },
+      bottomRight: { x: null, y: null },
+    },
   };
-  const [rectanglePoints, setRectanglePoints] = useState(blankPoints);
   const [uploadedImages, setUploadedImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [allImages, setAllImages] = useState(null);
@@ -23,6 +26,7 @@ export default function Paint2Print() {
     fileName: "",
     status: "",
   });
+  const [clientParameters, setClientParameters] = useState<ClientParameterInterface>(blankContourBox);
 
   const fetchUploads = async () => {
     const res = await fetch("/api/get-all-uploads");
@@ -63,7 +67,7 @@ export default function Paint2Print() {
     }
   };
 
-  const handleImageClick = (e) => {
+  const updateContourBox = (e) => {
     let ratioX = e.target.naturalWidth / e.target.offsetWidth;
     let ratioY = e.target.naturalHeight / e.target.offsetHeight;
 
@@ -74,12 +78,11 @@ export default function Paint2Print() {
     let imgY = Math.floor(domY * ratioY);
 
     const points = [imgX, imgY];
-    for (const [key, value] of Object.entries(rectanglePoints)) {
+    for (const [key, value] of Object.entries(clientParameters.contourBox)) {
       if (value.x === null && value.y === null) {
-        setRectanglePoints((prev) => ({
-          ...prev,
-          [key]: { x: imgX, y: imgY },
-        }));
+        const cB = {...clientParameters}
+        cB.contourBox[key] = { x: imgX, y: imgY }
+        setClientParameters(cB);
         break;
       }
     }
@@ -129,7 +132,7 @@ export default function Paint2Print() {
   const submitBoundingRectPointsToMeta = async () => {
     const formData = new FormData();
     formData.append("image", JSON.stringify(selectedImage));
-    formData.append("newValues", JSON.stringify(rectanglePoints));
+    formData.append("newValues", JSON.stringify(clientParameters.contourBox));
     const response = await fetch("/api/update-processing-meta", {
       method: "POST",
       body: formData,
@@ -152,11 +155,12 @@ export default function Paint2Print() {
     }
   };
 
+  console.log('clientParameters', clientParameters)
   return (
     <main className={styles.main}>
       <div className={styles.parameter_container}>
         <h2>Parameters</h2>
-
+        <ParameterContainer clientParameters={clientParameters} />
         {!allImages && (
           <button onClick={() => makeMeta()}>Make Meta</button>
         )}
@@ -170,7 +174,7 @@ export default function Paint2Print() {
       </div>
       <div className={styles.display_container}>
         <div className={styles.rectangle_point_wrapper}>
-          {Object.entries(rectanglePoints).map(([key, value]) => (
+          {Object.entries(clientParameters.contourBox).map(([key, value]) => (
             <div className={styles.rectangle_point} key={key}>
               {key}: {"["} {value.x || "-"}, {value.y || "-"} {"]"}
             </div>
@@ -178,7 +182,7 @@ export default function Paint2Print() {
           <button
             className={styles.rectangle_point_reset_button}
             name="reset"
-            onClick={() => setRectanglePoints(blankPoints)}
+            onClick={() => setClientParameters(blankContourBox)}
           >
             Reset Points
           </button>
@@ -188,7 +192,7 @@ export default function Paint2Print() {
             className={styles.selected_image}
             src={selectedImage.uploadURL}
             alt="Selected Image"
-            onClick={(e) => handleImageClick(e)}
+            onClick={(e) => updateContourBox(e)}
             width={selectedImage.displayWidth}
             height={selectedImage.displayHeight}
           />
