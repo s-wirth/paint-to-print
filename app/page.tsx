@@ -181,56 +181,6 @@ export default function Paint2Print() {
           </button>
         </div>
         <ImageCanvas selectedImage={selectedImage} />
-        {false && (
-          <div
-            className={styles.image_container}
-            style={{
-              width: selectedImage.displayWidth,
-              height: selectedImage.displayHeight,
-            }}
-            onClick={(e) => updateContourBox(e)}
-          >
-            <div
-              className={styles.cb_point}
-              style={{
-                display: `${clientParameters.contourBox["topLeft"].x ? "block" : "none"}`,
-                top: `${clientParameters.contourBox["topLeft"].y}px`,
-                left: `${clientParameters.contourBox["topLeft"].x}px`,
-              }}
-            />
-            <div
-              className={styles.cb_point}
-              style={{
-                display: `${clientParameters.contourBox["topRight"].x ? "block" : "none"}`,
-                top: `${clientParameters.contourBox["topRight"].y}px`,
-                left: `${clientParameters.contourBox["topRight"].x}px`,
-              }}
-            />
-            <div
-              className={styles.cb_point}
-              style={{
-                display: `${clientParameters.contourBox["bottomLeft"].x ? "block" : "none"}`,
-                top: `${clientParameters.contourBox["bottomLeft"].y}px`,
-                left: `${clientParameters.contourBox["bottomLeft"].x}px`,
-              }}
-            />
-            <div
-              className={styles.cb_point}
-              style={{
-                display: `${clientParameters.contourBox["bottomRight"].x ? "block" : "none"}`,
-                top: `${clientParameters.contourBox["bottomRight"].y}px`,
-                left: `${clientParameters.contourBox["bottomRight"].x}px`,
-              }}
-            />
-            <Image
-              className={styles.selected_image}
-              src={selectedImage.uploadURL}
-              alt="Selected Image"
-              width={selectedImage.displayWidth}
-              height={selectedImage.displayHeight}
-            />
-          </div>
-        )}
       </div>
       <div className={styles.up_and_down_loads_container}>
         <h2 className={styles.upload_header}>Upload an Image</h2>

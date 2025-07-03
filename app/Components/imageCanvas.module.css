@@ -1,5 +1,6 @@
 .canvas_container {
   position: relative;
+  align-self: center;
 }
 
 .image_canvas {

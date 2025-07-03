@@ -6,7 +6,7 @@ export default function ImageCanvas({ selectedImage }: any) {
   const displayWidth = selectedImage ? selectedImage.displayWidth : 0;
   const displayHeight = selectedImage ? selectedImage.displayHeight : 0;
   const canvasRef = useRef(null);
-  const [cP, setCp] = useState({ x: 0, y: 0 });
+  const [pointList, setPointList] = useState([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -26,15 +26,20 @@ export default function ImageCanvas({ selectedImage }: any) {
     const context = canvas.getContext("2d");
     console.log('canvas.getBoundingClientRect(', canvas.getBoundingClientRect())
     console.log('e', e)
-    const pX = e.clientX - canvas.getBoundingClientRect().left - 5;
-    const pY = e.clientY - canvas.getBoundingClientRect().top - 5;
+    const pX = e.clientX - canvas.getBoundingClientRect().left;
+    const pY = e.clientY - canvas.getBoundingClientRect().top;
     console.log('pX, pY', pX, pY)
-    const imageData = context.getImageData(pX, pY, 1, 1);
-    setCp({ x: pX, y: pY });
+    setPointList([...pointList, { x: pX, y: pY }]);
   }
   return (
     <div className={styles.canvas_container}>
-      <div className={styles.cP} style={{ left: cP.x, top: cP.y }}/>
+      {pointList.length > 0 && pointList.map((point, index) => (
+        <div
+          key={index}
+          className={styles.cP}
+          style={{ left: (point.x - 5), top: (point.y - 5) }}
+        />
+      ))}
       <canvas
         onClick={handleClick}
         className={styles.image_canvas}
