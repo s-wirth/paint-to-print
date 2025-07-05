@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import styles from "./imageCanvas.module.css";
 import NextImage from "next/image";
 
-export default function ImageCanvas({ selectedImage, bbSelectionActive }: any) {
+export default function ImageCanvas({ selectedImage, bbSelectionActive, setClientParameters }: any) {
   const displayWidth = selectedImage ? selectedImage.displayWidth : 0;
   const displayHeight = selectedImage ? selectedImage.displayHeight : 0;
   const canvasRef = useRef(null);
@@ -58,13 +58,32 @@ export default function ImageCanvas({ selectedImage, bbSelectionActive }: any) {
     const context = canvas.getContext("2d");
     const pX = e.clientX - canvas.getBoundingClientRect().left;
     const pY = e.clientY - canvas.getBoundingClientRect().top;
-    if (pointList.length === 0) {
-    }
     if (pointList.length > 0) {
       drawLine(pointList[pointList.length - 1].x, pointList[pointList.length - 1].y, pX, pY);
     }
     if (pointList.length === 3) {
       drawLine(pointList[0].x, pointList[0].y, pX, pY);
+      setClientParameters({
+        contourBox: {
+          p1: {
+            x: pointList[0].x,
+            y: pointList[0].y
+          },
+          p2: {
+            x: pointList[1].x,
+            y: pointList[1].y
+          },
+          p3: {
+            x: pointList[2].x,
+            y: pointList[2].y
+          },
+          p4: {
+            x: pX,
+            y: pY
+          }
+        }
+      });
+      
     }
     setPointList([...pointList, { x: pX, y: pY }]);
   }

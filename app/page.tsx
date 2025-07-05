@@ -143,7 +143,7 @@ export default function Paint2Print() {
         <ParameterContainer clientParameters={clientParameters} bbSelectionActive={bbSelectionActive} setBBSelectionActive={setBBSelectionActive} />
       </div>
       <div className={styles.display_container}>
-        <ImageCanvas selectedImage={selectedImage} bbSelectionActive={bbSelectionActive} />
+        <ImageCanvas selectedImage={selectedImage} bbSelectionActive={bbSelectionActive} setClientParameters={setClientParameters} />
       </div>
       <div className={styles.up_and_down_loads_container}>
         <h2 className={styles.upload_header}>Upload an Image</h2>
