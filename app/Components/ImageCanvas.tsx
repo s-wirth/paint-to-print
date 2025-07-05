@@ -21,14 +21,32 @@ export default function ImageCanvas({ selectedImage }: any) {
     };
   }, [selectedImage]);
 
+  const drawLine = (startX, startY, endX, endY) => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    context.beginPath();
+    context.moveTo(startX, startY);
+    context.lineTo(endX, endY);
+    context.lineWidth = 2;
+    context.strokeStyle = "yellow";
+    context.stroke();
+  }
+
   const handleClick = (e) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-    console.log('canvas.getBoundingClientRect(', canvas.getBoundingClientRect())
-    console.log('e', e)
     const pX = e.clientX - canvas.getBoundingClientRect().left;
     const pY = e.clientY - canvas.getBoundingClientRect().top;
-    console.log('pX, pY', pX, pY)
+    if (pointList.length === 0) {
+      context.fillStyle = "rgb(0 100 0 / 50%)";
+      context.fillRect(0,0, canvas.width,canvas.height);
+    }
+    if (pointList.length > 0) {
+      drawLine(pointList[pointList.length - 1].x, pointList[pointList.length - 1].y, pX, pY);
+    }
+    if (pointList.length === 3) {
+      drawLine(pointList[0].x, pointList[0].y, pX, pY);
+    }
     setPointList([...pointList, { x: pX, y: pY }]);
   }
   return (

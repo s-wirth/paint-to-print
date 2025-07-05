@@ -1,6 +1,7 @@
 .canvas_container {
   position: relative;
   align-self: center;
+  justify-self: center;
 }
 
 .image_canvas {
@@ -8,6 +9,7 @@
 }
 
 .cP {
+  pointer-events: none; 
   position: absolute;
   height: 10px;
   width: 10px;

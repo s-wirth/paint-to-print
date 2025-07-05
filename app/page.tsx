@@ -166,20 +166,6 @@ export default function Paint2Print() {
         <button onClick={() => createContour()}>Create Contour</button>
       </div>
       <div className={styles.display_container}>
-        <div className={styles.rectangle_point_wrapper}>
-          {Object.entries(clientParameters.contourBox).map(([key, value]) => (
-            <div className={styles.rectangle_point} key={key}>
-              {key}: {"["} {value.x || "-"}, {value.y || "-"} {"]"}
-            </div>
-          ))}
-          <button
-            className={styles.rectangle_point_reset_button}
-            name="reset"
-            onClick={() => setClientParameters(blankContourBox)}
-          >
-            Reset Points
-          </button>
-        </div>
         <ImageCanvas selectedImage={selectedImage} />
       </div>
       <div className={styles.up_and_down_loads_container}>

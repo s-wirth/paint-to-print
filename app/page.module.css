@@ -13,6 +13,7 @@
 .display_container {
   background: #13111e;
   display: flex;
+  justify-content: space-evenly;
   flex-direction: column;
 }
 
