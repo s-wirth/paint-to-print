@@ -9,10 +9,10 @@ import ImageCanvas from "./Components/ImageCanvas";
 export default function Paint2Print() {
   const blankContourBox = {
     contourBox: {
-      topLeft: { x: null, y: null },
-      topRight: { x: null, y: null },
-      bottomLeft: { x: null, y: null },
-      bottomRight: { x: null, y: null },
+      p1: { x: null, y: null },
+      p2: { x: null, y: null },
+      p3: { x: null, y: null },
+      p4: { x: null, y: null },
     },
   };
   const [uploadedImages, setUploadedImages] = useState([]);
@@ -26,6 +26,7 @@ export default function Paint2Print() {
     fileName: "",
     status: "",
   });
+  const [bbSelectionActive, setBBSelectionActive] = useState(false);
   const [clientParameters, setClientParameters] =
     useState<ClientParameterInterface>(blankContourBox);
 
@@ -65,22 +66,6 @@ export default function Paint2Print() {
     if (response.ok) {
       fetchUploads();
       fetchImageMeta();
-    }
-  };
-
-  const updateContourBox = (e) => {
-    const nE = e.nativeEvent;
-    const nELx = nE.layerX;
-    const nELy = nE.layerY;
-    console.log('e', e)
-
-    for (const [key, value] of Object.entries(clientParameters.contourBox)) {
-      if (value.x === null && value.y === null) {
-        const cB = { ...clientParameters };
-        cB.contourBox[key] = { x: nELx, y: nELy };
-        setClientParameters(cB);
-        break;
-      }
     }
   };
 
@@ -155,18 +140,10 @@ export default function Paint2Print() {
     <main className={styles.main}>
       <div className={styles.parameter_container}>
         <h2>Parameters</h2>
-        <ParameterContainer clientParameters={clientParameters} />
-        {!allImages && <button onClick={() => makeMeta()}>Make Meta</button>}
-        <button onClick={() => makeProcessingMeta()}>
-          Make Processing Meta
-        </button>
-        <button onClick={() => submitBoundingRectPointsToMeta()}>
-          Submit Bounding Rect Points to Meta
-        </button>
-        <button onClick={() => createContour()}>Create Contour</button>
+        <ParameterContainer clientParameters={clientParameters} bbSelectionActive={bbSelectionActive} setBBSelectionActive={setBBSelectionActive} />
       </div>
       <div className={styles.display_container}>
-        <ImageCanvas selectedImage={selectedImage} />
+        <ImageCanvas selectedImage={selectedImage} bbSelectionActive={bbSelectionActive} />
       </div>
       <div className={styles.up_and_down_loads_container}>
         <h2 className={styles.upload_header}>Upload an Image</h2>
