@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import styles from "./imageCanvas.module.css";
 import NextImage from "next/image";
 
-export default function ImageCanvas({ selectedImage, bbSelectionActive, setClientParameters }: any) {
+export default function ImageCanvas({ selectedImage, bbSelectionActive, setBBSelectionActive, setClientParameters }: any) {
   const displayWidth = selectedImage ? selectedImage.displayWidth : 0;
   const displayHeight = selectedImage ? selectedImage.displayHeight : 0;
   const canvasRef = useRef(null);
@@ -15,13 +15,24 @@ export default function ImageCanvas({ selectedImage, bbSelectionActive, setClien
     if (!canvas || !context || !selectedImage) {
       return;
     }
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
     if (bbSelectionActive) {
-      context.fillStyle = "rgb(0 100 0 / 50%)";
-      context.fillRect(0,0, canvas.width,canvas.height);
-    } else {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
-    }
+          context.fillStyle = "rgb(100 100 0 / 50%)";
+          context.fillRect(0,0, canvas.width,canvas.height);
+        }
+    else if (pointList.length === 4) {
+            for (let i = 0; i < pointList.length; i++) {
+              switch (i) {
+                case 3:
+                  drawLine(pointList[i].x, pointList[i].y, pointList[0].x, pointList[0].y, true);
+                  break;
+                default:
+                  drawLine(pointList[i].x, pointList[i].y, pointList[i + 1].x, pointList[i + 1].y, true);
+              }
+            }
+            setPointList([]);
+          }
   }, [bbSelectionActive])
   
 
@@ -39,7 +50,13 @@ export default function ImageCanvas({ selectedImage, bbSelectionActive, setClien
     };
   }, [selectedImage]);
 
-  const drawLine = (startX, startY, endX, endY) => {
+  const drawLine = (startX, startY, endX, endY, calledFromUE=false) => {
+    if (calledFromUE) {
+      // console.log('startX', startX)
+      // console.log('startY', startY)
+      // console.log('endX', endX)
+      // console.log('endY', endY)
+    }
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     context.beginPath();
@@ -59,10 +76,11 @@ export default function ImageCanvas({ selectedImage, bbSelectionActive, setClien
     const pX = e.clientX - canvas.getBoundingClientRect().left;
     const pY = e.clientY - canvas.getBoundingClientRect().top;
     if (pointList.length > 0) {
-      drawLine(pointList[pointList.length - 1].x, pointList[pointList.length - 1].y, pX, pY);
+      drawLine(pointList[pointList.length - 1].x, pointList[pointList.length - 1].y, pX, pY, false);
     }
     if (pointList.length === 3) {
-      drawLine(pointList[0].x, pointList[0].y, pX, pY);
+      drawLine(pointList[0].x, pointList[0].y, pX, pY, false);
+      setBBSelectionActive(false);
       setClientParameters({
         contourBox: {
           p1: {

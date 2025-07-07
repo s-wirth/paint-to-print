@@ -140,10 +140,10 @@ export default function Paint2Print() {
     <main className={styles.main}>
       <div className={styles.parameter_container}>
         <h2>Parameters</h2>
-        <ParameterContainer clientParameters={clientParameters} bbSelectionActive={bbSelectionActive} setBBSelectionActive={setBBSelectionActive} />
+        <ParameterContainer clientParameters={clientParameters} bbSelectionActive={bbSelectionActive} setBBSelectionActive={setBBSelectionActive} submitBoundingRectPointsToMeta={submitBoundingRectPointsToMeta} />
       </div>
       <div className={styles.display_container}>
-        <ImageCanvas selectedImage={selectedImage} bbSelectionActive={bbSelectionActive} setClientParameters={setClientParameters} />
+        <ImageCanvas selectedImage={selectedImage} bbSelectionActive={bbSelectionActive} setBBSelectionActive={setBBSelectionActive} setClientParameters={setClientParameters} />
       </div>
       <div className={styles.up_and_down_loads_container}>
         <h2 className={styles.upload_header}>Upload an Image</h2>

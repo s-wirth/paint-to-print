@@ -8,7 +8,9 @@ import sys
 # ---------------------------------------------------------------------
 
 def pprint(*args, **kwargs):
+    pprint('\n')
     print(*args, file=sys.stderr, **kwargs)
+    pprint('\n')
 
 
 def ending_slash(path):
